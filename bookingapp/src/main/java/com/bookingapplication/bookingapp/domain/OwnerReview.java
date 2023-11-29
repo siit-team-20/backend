@@ -2,21 +2,15 @@ package com.bookingapplication.bookingapp.domain;
 
 public class OwnerReview {
 
-<<<<<<< HEAD
 	private Long id;
 	private String ownerEmail;
 	private String guestEmail;
-=======
-	private Long ownerId;
-	private Long guestId;
->>>>>>> 34dd06141f656fd943b96aa48bfc363bcac2f29f
 	private Rating rating;
-    private String comment;
+    	private String comment;
 
     public OwnerReview() {
 
     }
-<<<<<<< HEAD
     
     public OwnerReview(Long id, String ownerEmail, String guestEmail, Rating rating, String comment) {
 		super();
@@ -30,15 +24,10 @@ public class OwnerReview {
     public void copyValues(OwnerReview ownerReview) {
     		this.ownerEmail = ownerReview.getOwnerEmail();
     		this.guestEmail = ownerReview.getGuestEmail();
-=======
-
-    public void copyValues(OwnerReview ownerReview) {
->>>>>>> 34dd06141f656fd943b96aa48bfc363bcac2f29f
     		this.rating = ownerReview.getRating();
     		this.comment = ownerReview.getComment();
-    }
-
-<<<<<<< HEAD
+    	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -61,14 +50,6 @@ public class OwnerReview {
 
 	public void setGuestEmail(String guestEmail) {
 		this.guestEmail = guestEmail;
-=======
-	public Long getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(Long ownerId) {
-		this.ownerId = ownerId;
->>>>>>> 34dd06141f656fd943b96aa48bfc363bcac2f29f
 	}
 
 	public Rating getRating() {
@@ -86,16 +67,4 @@ public class OwnerReview {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-
-<<<<<<< HEAD
-=======
-	public Long getGuestId() {
-		return guestId;
-	}
-
-	public void setGuestId(Long guestId) {
-		this.guestId = guestId;
-	}
-
->>>>>>> 34dd06141f656fd943b96aa48bfc363bcac2f29f
 }
