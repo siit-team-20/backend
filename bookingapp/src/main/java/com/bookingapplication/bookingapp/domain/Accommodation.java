@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Accommodation {
 	
+	private Long id;
 	private String ownerEmail;
 	private String name;
 	private String description;
@@ -15,16 +16,19 @@ public class Accommodation {
 	private List<String> benefits;
 	private LocalDate availabilityStart;
 	private LocalDate availabilityEnd;
+	private boolean isApproved;
 	private boolean isPriceByGuest;
 	private double price;
+	private LocalDate resevationCancellationDeadline;
 	private List<String> pictures;
 
 	public Accommodation() {
 
 	}
 
-	public Accommodation(String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isPriceByGuest, double price, List<String> pictures) {
+	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, double price, LocalDate resevationCancellationDeadline, List<String> pictures) {
 		super();
+		this.id = id;
 		this.ownerEmail = ownerEmail;
 		this.name = name;
 		this.description = description;
@@ -35,9 +39,18 @@ public class Accommodation {
 		this.benefits = benefits;
 		this.availabilityStart = start;
 		this.availabilityEnd = end;
+		this.isApproved = isApproved;
 		this.isPriceByGuest = isPriceByGuest;
+		this.resevationCancellationDeadline = resevationCancellationDeadline;
 		this.price = price;
 		this.pictures = pictures;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public String getOwnerEmail() {
@@ -110,10 +123,17 @@ public class Accommodation {
 		this.availabilityEnd = availabilityEnd;
 	}
 	
+	public boolean getIsApproved() {
+		return isApproved;
+	}
+	public void setIsApproved(boolean isApproved) {
+		this.isApproved = isApproved;
+	}
+	
 	public boolean getIsPriceByGuest() {
 		return isPriceByGuest;
 	}
-	public void setIsPriceByGuest(Boolean isPriceByGuest) {
+	public void setIsPriceByGuest(boolean isPriceByGuest) {
 		this.isPriceByGuest = isPriceByGuest;
 	}
 	
@@ -122,6 +142,13 @@ public class Accommodation {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public LocalDate getResevationCancellationDeadline() {
+		return resevationCancellationDeadline;
+	}
+	public void setResevationCancellationDeadline(LocalDate resevationCancellationDeadline) {
+		this.resevationCancellationDeadline = resevationCancellationDeadline;
 	}
 	
 	public List<String> getPictures() {
@@ -142,8 +169,10 @@ public class Accommodation {
 		this.benefits = accommodation.getBenefits();
 		this.availabilityStart = accommodation.getAvailabilityStart();
 		this.availabilityEnd = accommodation.getAvailabilityEnd();
+		this.isApproved = accommodation.getIsApproved();
 		this.isPriceByGuest = accommodation.getIsPriceByGuest();
 		this.price = accommodation.getPrice();
+		this.resevationCancellationDeadline = accommodation.getResevationCancellationDeadline();
 		this.pictures = accommodation.getPictures();
 }
 

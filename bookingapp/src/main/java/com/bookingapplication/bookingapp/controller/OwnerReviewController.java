@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookingapplication.bookingapp.domain.Accommodation;
-import com.bookingapplication.bookingapp.service.AccommodationService;
+import com.bookingapplication.bookingapp.domain.OwnerReview;
+import com.bookingapplication.bookingapp.service.OwnerReviewService;
 
 @RestController
-@RequestMapping("/api/accommodations")
-public class AccommodationController {
+@RequestMapping("/api/ownerReviews")
+public class OwnerReviewController {
 	
 	@Autowired
-	private AccommodationService accommodationService;
+	private OwnerReviewService ownerReviewService;
 
 	/*
 	 * Prilikom poziva metoda potrebno je navesti nekoliko parametara
@@ -35,28 +35,28 @@ public class AccommodationController {
 	 * (sam podatak) i zaglavlje (metapodatke) i status kod, ili samo telo ako se
 	 * metoda anotira sa @ResponseBody.
 	 * 
-	 * url: /api/accommodations GET
+	 * url: /api/greetings GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<Accommodation>> getAccommodations() {
-		Collection<Accommodation> accommodations = accommodationService.findAll();
-		return new ResponseEntity<Collection<Accommodation>>(accommodations, HttpStatus.OK);
+	public ResponseEntity<Collection<OwnerReview>> getOwnerReviews() {
+		Collection<OwnerReview> ownerReviews = ownerReviewService.findAll();
+		return new ResponseEntity<Collection<OwnerReview>>(ownerReviews, HttpStatus.OK);
 	}
 
 	/*
 	 * U viticastim zagradama se navodi promenljivi deo putanje.
 	 * 
-	 * url: /api/accommodation/1 GET
+	 * url: /api/greetings/1 GET
 	 */
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Accommodation> getAccommodation(@PathVariable("id") Long id) {
-		Accommodation accommodation = accommodationService.findOne(id);
+	public ResponseEntity<OwnerReview> getOwnerReview(@PathVariable("id") Long id) {
+		OwnerReview ownerReview = ownerReviewService.findOne(id);
 
-		if (accommodation == null) {
-			return new ResponseEntity<Accommodation>(HttpStatus.NOT_FOUND);
+		if (ownerReview == null) {
+			return new ResponseEntity<OwnerReview>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Accommodation>(accommodation, HttpStatus.OK);
+		return new ResponseEntity<OwnerReview>(ownerReview, HttpStatus.OK);
 	}
 
 	/*
@@ -67,41 +67,41 @@ public class AccommodationController {
 	 * consumes' sa naznakom oblika u kojem se salje podatak (u nasem slucaju JSON).
 	 * 
 	 * Anotiranjem parametra sa @RequestBody Spring ce pokusati od prosledjenog JSON
-	 * podatka da napravi objekat tipa Accommodation.
+	 * podatka da napravi objekat tipa OwnerReview.
 	 * 
-	 * url: /api/accommodation POST
+	 * url: /api/greetings POST
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Accommodation> createAccommodation(@RequestBody Accommodation accommodation) throws Exception {
-		Accommodation savedAccommodation = accommodationService.create(accommodation);
-		return new ResponseEntity<Accommodation>(savedAccommodation, HttpStatus.CREATED);
+	public ResponseEntity<OwnerReview> createOwnerReview(@RequestBody OwnerReview ownerReview) throws Exception {
+		OwnerReview savedReview = ownerReviewService.create(ownerReview);
+		return new ResponseEntity<OwnerReview>(savedReview, HttpStatus.CREATED);
 	}
 
 	/*
-	 * url: /api/accommodation/1 PUT
+	 * url: /api/greetings/1 PUT
 	 */
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Accommodation> updateAccommodation(@RequestBody Accommodation accommodation, @PathVariable Long id)
+	public ResponseEntity<OwnerReview> updateOwnerReview(@RequestBody OwnerReview ownerReview, @PathVariable Long id)
 			throws Exception {
-		Accommodation accommodationForUpdate = accommodationService.findOne(id);
-		accommodationForUpdate.copyValues(accommodation);
+		OwnerReview reviewForUpdate = ownerReviewService.findOne(id);
+		reviewForUpdate.copyValues(ownerReview);
 
-		Accommodation updatedAccommodation = accommodationService.update(accommodationForUpdate);
+		OwnerReview updatedReview = ownerReviewService.update(reviewForUpdate);
 
-		if (updatedAccommodation == null) {
-			return new ResponseEntity<Accommodation>(HttpStatus.INTERNAL_SERVER_ERROR);
+		if (updatedReview == null) {
+			return new ResponseEntity<OwnerReview>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<Accommodation>(updatedAccommodation, HttpStatus.OK);
+		return new ResponseEntity<OwnerReview>(updatedReview, HttpStatus.OK);
 	}
 
 	/*
-	 * url: /api/accommodation/1 DELETE
+	 * url: /api/greetings/1 DELETE
 	 */
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Accommodation> deleteAccommodation(@PathVariable("id") Long id) {
-		accommodationService.delete(id);
-		return new ResponseEntity<Accommodation>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<OwnerReview> deleteOwnerReview(@PathVariable("id") Long id) {
+		ownerReviewService.delete(id);
+		return new ResponseEntity<OwnerReview>(HttpStatus.NO_CONTENT);
 	}
 
 }
