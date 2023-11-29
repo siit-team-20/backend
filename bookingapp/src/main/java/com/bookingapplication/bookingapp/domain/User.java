@@ -79,5 +79,14 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    
+    public void copyValues(User user) {
+		this.email = user.getEmail();
+		this.name = user.getName();
+		this.surname = user.getSurname();
+		this.password = user.getPassword();
+		this.phone = user.getPhone();
+		this.address = user.getAddress();
+    }
 	
 }
