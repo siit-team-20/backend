@@ -6,7 +6,7 @@ public class OwnerReview {
 	private String ownerEmail;
 	private String guestEmail;
 	private Rating rating;
-    	private String comment;
+    private String comment;
 
     public OwnerReview() {
 
@@ -26,7 +26,7 @@ public class OwnerReview {
     		this.guestEmail = ownerReview.getGuestEmail();
     		this.rating = ownerReview.getRating();
     		this.comment = ownerReview.getComment();
-    	}
+    }
 	
 	public Long getId() {
 		return id;
