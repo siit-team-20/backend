@@ -1,7 +1,5 @@
 package com.bookingapplication.bookingapp.domain;
 
-import rs.ac.uns.ftn.informatika.rest.domain.Greeting;
-
 public class User {
 
 	private String email;
