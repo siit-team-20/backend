@@ -2,6 +2,7 @@ package com.bookingapplication.bookingapp.domain;
 
 public class Report {
 	
+	private Long id;
 	private String reporterEmail;
 	private String reportedEmail;
 	private Long accommodationId;
@@ -10,10 +11,19 @@ public class Report {
 		
 	}
 	
-	public Report(String reporterEmail, String reportedEmail, Long accommodationId) {
+	public Report(Long id, String reporterEmail, String reportedEmail, Long accommodationId) {
+		this.id = id;
 		this.reporterEmail = reporterEmail;
 		this.reportedEmail = reportedEmail;
 		this.accommodationId = accommodationId;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public String getReporterEmail() {

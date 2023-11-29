@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookingapplication.bookingapp.domain.Report;
-import com.bookingapplication.bookingapp.service.ReportService;
+import com.bookingapplication.bookingapp.domain.Notification;
+import com.bookingapplication.bookingapp.service.NotificationService;
 
 @RestController
-@RequestMapping("/api/reports")
-public class ReportController {
+@RequestMapping("/api/notifications")
+public class NotificationController {
 
 	@Autowired
-	private ReportService reportService;
+	private NotificationService notificationService;
 
 	/*
 	 * Prilikom poziva metoda potrebno je navesti nekoliko parametara
@@ -35,28 +35,28 @@ public class ReportController {
 	 * (sam podatak) i zaglavlje (metapodatke) i status kod, ili samo telo ako se
 	 * metoda anotira sa @ResponseBody.
 	 * 
-	 * url: /api/reports GET
+	 * url: /api/notificatons GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<Report>> getUsers() {
-		Collection<Report> reports = reportService.findAll();
-		return new ResponseEntity<Collection<Report>>(reports, HttpStatus.OK);
+	public ResponseEntity<Collection<Notification>> getUsers() {
+		Collection<Notification> notifications = notificationService.findAll();
+		return new ResponseEntity<Collection<Notification>>(notifications, HttpStatus.OK);
 	}
 
 	/*
 	 * U viticastim zagradama se navodi promenljivi deo putanje.
 	 * 
-	 * url: /api/reports/1 GET
+	 * url: /api/notifications/1 GET
 	 */
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Report> getUser(@PathVariable("id") Long id) {
-		Report report = reportService.findOne(id);
+	public ResponseEntity<Notification> getUser(@PathVariable("id") Long id) {
+		Notification notification = notificationService.findOne(id);
 
-		if (report == null) {
-			return new ResponseEntity<Report>(HttpStatus.NOT_FOUND);
+		if (notification == null) {
+			return new ResponseEntity<Notification>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Report>(report, HttpStatus.OK);
+		return new ResponseEntity<Notification>(notification, HttpStatus.OK);
 	}
 
 	/*
@@ -69,39 +69,39 @@ public class ReportController {
 	 * Anotiranjem parametra sa @RequestBody Spring ce pokusati od prosledjenog JSON
 	 * podatka da napravi objekat tipa Greeting.
 	 * 
-	 * url: /api/reports POST
+	 * url: /api/notifications POST
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Report> createGreeting(@RequestBody Report report) throws Exception {
-		Report savedReport = reportService.create(report);
-		return new ResponseEntity<Report>(savedReport, HttpStatus.CREATED);
+	public ResponseEntity<Notification> createGreeting(@RequestBody Notification notification) throws Exception {
+		Notification savedNotification = notificationService.create(notification);
+		return new ResponseEntity<Notification>(savedNotification, HttpStatus.CREATED);
 	}
 
 	/*
-	 * url: /api/reports/1 PUT
+	 * url: /api/notifications/1 PUT
 	 */
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Report> updateGreeting(@RequestBody Report report, @PathVariable Long id)
+	public ResponseEntity<Notification> updateGreeting(@RequestBody Notification notification, @PathVariable Long id)
 			throws Exception {
-		Report reportForUpdate = reportService.findOne(id);
-		reportForUpdate.copyValues(report);
+		Notification notificationForUpdate = notificationService.findOne(id);
+		notificationForUpdate.copyValues(notification);
 
-		Report updatedReport = reportService.update(reportForUpdate);
+		Notification updatedNotification = notificationService.update(notificationForUpdate);
 
-		if (updatedReport == null) {
-			return new ResponseEntity<Report>(HttpStatus.INTERNAL_SERVER_ERROR);
+		if (updatedNotification == null) {
+			return new ResponseEntity<Notification>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<Report>(updatedReport, HttpStatus.OK);
+		return new ResponseEntity<Notification>(updatedNotification, HttpStatus.OK);
 	}
 
 	/*
-	 * url: /api/reports/1 DELETE
+	 * url: /api/notifications/1 DELETE
 	 */
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Report> deleteGreeting(@PathVariable("id") Long id) {
-		reportService.delete(id);
-		return new ResponseEntity<Report>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<Notification> deleteGreeting(@PathVariable("id") Long id) {
+		notificationService.delete(id);
+		return new ResponseEntity<Notification>(HttpStatus.NO_CONTENT);
 	}
 	
 }
