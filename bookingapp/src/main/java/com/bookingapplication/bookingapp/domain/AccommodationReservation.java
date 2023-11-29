@@ -9,6 +9,7 @@ public class AccommodationReservation {
     private Long accommodationId;
     private Date date;
     private int days;
+    private int guestNumber;
     
     
 
@@ -55,12 +56,22 @@ public class AccommodationReservation {
 	public void setDays(int days) {
 		this.days = days;
 	}
+	public int getGuestNumber() {
+		return guestNumber;
+	}
+
+	public void setGuestNumber(int guestNumber) {
+		this.guestNumber = guestNumber;
+	}
 
 	public void copyValues(AccommodationReservation accommodationReservation) {
 		this.accommodationId = accommodationReservation.getAccommodationId();
 		this.date = accommodationReservation.getDate();
 		this.days = accommodationReservation.getDays();
 		this.guestId = accommodationReservation.getGuestId();
+		this.guestNumber = accommodationReservation.getGuestNumber();
 }
+
+	
 
 }
