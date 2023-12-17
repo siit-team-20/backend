@@ -19,14 +19,14 @@ public class Accommodation {
 	private boolean isApproved;
 	private boolean isPriceByGuest;
 	private double price;
-	private LocalDate resevationCancellationDeadline;
+	private int resevationCancellationDeadline;
 	private List<String> pictures;
 
 	public Accommodation() {
 
 	}
 
-	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, double price, LocalDate resevationCancellationDeadline, List<String> pictures) {
+	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, double price, int resevationCancellationDeadline, List<String> pictures) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -144,10 +144,10 @@ public class Accommodation {
 		this.price = price;
 	}
 	
-	public LocalDate getResevationCancellationDeadline() {
+	public int getResevationCancellationDeadline() {
 		return resevationCancellationDeadline;
 	}
-	public void setResevationCancellationDeadline(LocalDate resevationCancellationDeadline) {
+	public void setResevationCancellationDeadline(int resevationCancellationDeadline) {
 		this.resevationCancellationDeadline = resevationCancellationDeadline;
 	}
 	
