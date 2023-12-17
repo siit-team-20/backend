@@ -19,10 +19,10 @@ import com.bookingapplication.bookingapp.domain.FavouriteAccommodation;
 import com.bookingapplication.bookingapp.service.FavouriteAccommodationService;
 
 @RestController
-@RequestMapping("/api/accommodations")
+@RequestMapping("/api/accommodations/favourites")
 public class FavouriteAccommodationController {
 
-	@Autowired
+	//@Autowired
 	private FavouriteAccommodationService favouriteAccommodationService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

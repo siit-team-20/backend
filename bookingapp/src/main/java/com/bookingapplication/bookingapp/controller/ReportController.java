@@ -22,7 +22,7 @@ import com.bookingapplication.bookingapp.service.ReportService;
 @RequestMapping("/api/reports")
 public class ReportController {
 
-	@Autowired
+	//@Autowired
 	private ReportService reportService;
 
 	/*

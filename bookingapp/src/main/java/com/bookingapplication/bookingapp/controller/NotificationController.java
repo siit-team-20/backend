@@ -22,7 +22,7 @@ import com.bookingapplication.bookingapp.service.NotificationService;
 @RequestMapping("/api/notifications")
 public class NotificationController {
 
-	@Autowired
+	//@Autowired
 	private NotificationService notificationService;
 
 	/*

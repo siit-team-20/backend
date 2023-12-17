@@ -174,6 +174,6 @@ public class Accommodation {
 		this.price = accommodation.getPrice();
 		this.resevationCancellationDeadline = accommodation.getResevationCancellationDeadline();
 		this.pictures = accommodation.getPictures();
-}
+	}
 
 }
