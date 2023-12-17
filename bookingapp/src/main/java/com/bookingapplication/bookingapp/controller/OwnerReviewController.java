@@ -22,7 +22,7 @@ import com.bookingapplication.bookingapp.service.OwnerReviewService;
 @RequestMapping("/api/ownerReviews")
 public class OwnerReviewController {
 	
-	@Autowired
+	//@Autowired
 	private OwnerReviewService ownerReviewService;
 
 	/*

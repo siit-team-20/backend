@@ -22,7 +22,7 @@ import com.bookingapplication.bookingapp.service.AccommodationReservationService
 @RequestMapping("/api/accommodations/reservations")
 public class AccommodationReservationController {
 
-	@Autowired
+	//@Autowired
 	private AccommodationReservationService accommodationReservationService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

@@ -22,7 +22,7 @@ import com.bookingapplication.bookingapp.service.AccommodationService;
 @RequestMapping("/api/accommodations")
 public class AccommodationController {
 	
-	@Autowired
+	//@Autowired
 	private AccommodationService accommodationService;
 
 	/*

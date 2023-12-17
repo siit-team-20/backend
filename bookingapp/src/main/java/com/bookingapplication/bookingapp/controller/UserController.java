@@ -23,7 +23,7 @@ import com.bookingapplication.bookingapp.service.UserService;
 @RequestMapping("/api/users")
 public class UserController {
 	
-	@Autowired
+	//@Autowired
 	private UserService userService;
 
 	/*
