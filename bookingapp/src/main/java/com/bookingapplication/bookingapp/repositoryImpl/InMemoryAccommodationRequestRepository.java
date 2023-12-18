@@ -25,10 +25,6 @@ public class InMemoryAccommodationRequestRepository implements AccommodationRequ
 
 	@Override
 	public Collection<AccommodationRequestDTO> findAll() {
-		List<String> list = new ArrayList<String>();
-		Accommodation accommodation = new Accommodation((long) 1,  "email", "Andrija", "opis", "lokacija",  3,  5,  AccommodationType.apartment, list, LocalDate.now(), LocalDate.now(), false, false, 10.00, LocalDate.now(), list);
-		AccommodationRequestDTO accommodationRequest = new AccommodationRequestDTO((long) 1, accommodation, accommodation, AccommodationRequestType.Created);
-		this.accommodationRequests.put((long)1, accommodationRequest);
 		return this.accommodationRequests.values();
 	}
 
