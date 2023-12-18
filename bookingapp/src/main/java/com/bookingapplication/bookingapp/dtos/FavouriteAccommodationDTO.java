@@ -1,16 +1,16 @@
-package com.bookingapplication.bookingapp.domain;
+package com.bookingapplication.bookingapp.dtos;
 
-public class FavouriteAccommodation {
+public class FavouriteAccommodationDTO {
 
 	private Long id;
 	private Long guestid;
     private Long accommodationId;
 
-    public FavouriteAccommodation() {
+    public FavouriteAccommodationDTO() {
 
     }
     
-    public void copyValues(FavouriteAccommodation favouriteAccommodation) {
+    public void copyValues(FavouriteAccommodationDTO favouriteAccommodation) {
     		this.accommodationId = favouriteAccommodation.getAccommodationId();
     }
     
@@ -37,5 +37,5 @@ public class FavouriteAccommodation {
 	public void setAccommodationId(Long accommodationId) {
 		this.accommodationId = accommodationId;
 	}
-
+	
 }
