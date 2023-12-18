@@ -1,9 +1,12 @@
-package com.bookingapplication.bookingapp.domain;
+package com.bookingapplication.bookingapp.dtos;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class Accommodation {
+import com.bookingapplication.bookingapp.domain.Accommodation;
+import com.bookingapplication.bookingapp.domain.AccommodationType;
+
+public class AccommodationDTO {
 	
 	private Long id;
 	private String ownerEmail;
@@ -22,11 +25,11 @@ public class Accommodation {
 	private int reservationCancellationDeadline;
 	//private List<String> pictures;
 
-	public Accommodation() {
+	public AccommodationDTO() {
 
 	}
 
-	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, double price, int reservationCancellationDeadline) {
+	public AccommodationDTO(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, double price, int reservationCancellationDeadline) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -158,7 +161,7 @@ public class Accommodation {
 		this.pictures = pictures;
 	}*/
 	
-	public void copyValues(Accommodation accommodation) {
+	public void copyValues(AccommodationDTO accommodation) {
 		this.ownerEmail = accommodation.getOwnerEmail();
 		this.name = accommodation.getName();
 		this.description = accommodation.getDescription();

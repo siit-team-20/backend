@@ -3,13 +3,14 @@ package com.bookingapplication.bookingapp.service;
 import java.util.Collection;
 
 import com.bookingapplication.bookingapp.domain.Accommodation;
+import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 
 public interface AccommodationService {
 	
-	Collection<Accommodation> findAll();
-	Accommodation findOne(Long id);
-	Accommodation create(Accommodation accommodation) throws Exception;
-	Accommodation update(Accommodation accommodation) throws Exception;
+	Collection<AccommodationDTO> findAll();
+	AccommodationDTO findOne(Long id);
+	AccommodationDTO create(AccommodationDTO accommodation) throws Exception;
+	AccommodationDTO update(AccommodationDTO accommodation) throws Exception;
 	void delete(Long id);
 
 }
