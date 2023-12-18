@@ -17,59 +17,60 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.domain.FavouriteAccommodation;
 import com.bookingapplication.bookingapp.service.FavouriteAccommodationService;
+import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationDTO;
 
 @RestController
 @RequestMapping("/api/accommodations/favourites")
 public class FavouriteAccommodationController {
 
-	//@Autowired
+	@Autowired
 	private FavouriteAccommodationService favouriteAccommodationService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<FavouriteAccommodation>> getFavouriteAccommodations() {
-		Collection<FavouriteAccommodation> favouriteAccommodations = favouriteAccommodationService.findAll();
-		return new ResponseEntity<Collection<FavouriteAccommodation>>(favouriteAccommodations, HttpStatus.OK);
+	public ResponseEntity<Collection<FavouriteAccommodationDTO>> getFavouriteAccommodations() {
+		Collection<FavouriteAccommodationDTO> favouriteAccommodations = favouriteAccommodationService.findAll();
+		return new ResponseEntity<Collection<FavouriteAccommodationDTO>>(favouriteAccommodations, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FavouriteAccommodation> getFavouriteAccommodation(@PathVariable("id") Long id) {
-		FavouriteAccommodation favouriteAccommodation = favouriteAccommodationService.findOne(id);
+	public ResponseEntity<FavouriteAccommodationDTO> getFavouriteAccommodation(@PathVariable("id") Long id) {
+		FavouriteAccommodationDTO favouriteAccommodation = favouriteAccommodationService.findOne(id);
 
 		if (favouriteAccommodation == null) {
-			return new ResponseEntity<FavouriteAccommodation>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<FavouriteAccommodationDTO>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<FavouriteAccommodation>(favouriteAccommodation, HttpStatus.OK);
+		return new ResponseEntity<FavouriteAccommodationDTO>(favouriteAccommodation, HttpStatus.OK);
 	}
 
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FavouriteAccommodation> createFavouriteAccommodation(@RequestBody FavouriteAccommodation FavouriteAccommodation) throws Exception {
-		FavouriteAccommodation savedFavouriteAccommodation = favouriteAccommodationService.create(FavouriteAccommodation);
-		return new ResponseEntity<FavouriteAccommodation>(savedFavouriteAccommodation, HttpStatus.CREATED);
+	public ResponseEntity<FavouriteAccommodationDTO> createFavouriteAccommodation(@RequestBody FavouriteAccommodationDTO favouriteAccommodation) throws Exception {
+		FavouriteAccommodationDTO savedFavouriteAccommodation = favouriteAccommodationService.create(favouriteAccommodation);
+		return new ResponseEntity<FavouriteAccommodationDTO>(savedFavouriteAccommodation, HttpStatus.CREATED);
 	}
 
 	
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FavouriteAccommodation> updateFavouriteAccommodation(@RequestBody FavouriteAccommodation FavouriteAccommodation, @PathVariable Long id)
+	public ResponseEntity<FavouriteAccommodationDTO> updateFavouriteAccommodation(@RequestBody FavouriteAccommodationDTO FavouriteAccommodation, @PathVariable Long id)
 			throws Exception {
-		FavouriteAccommodation favouriteAccommodationForUpdate = favouriteAccommodationService.findOne(id);
+		FavouriteAccommodationDTO favouriteAccommodationForUpdate = favouriteAccommodationService.findOne(id);
 		favouriteAccommodationForUpdate.copyValues(FavouriteAccommodation);
 
-		FavouriteAccommodation updatedFavouriteAccommodation = favouriteAccommodationService.update(favouriteAccommodationForUpdate);
+		FavouriteAccommodationDTO updatedFavouriteAccommodation = favouriteAccommodationService.update(favouriteAccommodationForUpdate);
 
 		if (updatedFavouriteAccommodation == null) {
-			return new ResponseEntity<FavouriteAccommodation>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<FavouriteAccommodationDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<FavouriteAccommodation>(updatedFavouriteAccommodation, HttpStatus.OK);
+		return new ResponseEntity<FavouriteAccommodationDTO>(updatedFavouriteAccommodation, HttpStatus.OK);
 	}
 
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<FavouriteAccommodation> deleteFavouriteAccommodation(@PathVariable("id") Long id) {
+	public ResponseEntity<FavouriteAccommodationDTO> deleteFavouriteAccommodation(@PathVariable("id") Long id) {
 		favouriteAccommodationService.delete(id);
-		return new ResponseEntity<FavouriteAccommodation>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<FavouriteAccommodationDTO>(HttpStatus.NO_CONTENT);
 	}
 
 }

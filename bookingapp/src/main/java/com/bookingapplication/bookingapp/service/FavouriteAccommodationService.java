@@ -2,16 +2,16 @@ package com.bookingapplication.bookingapp.service;
 
 import java.util.Collection;
 
-import com.bookingapplication.bookingapp.domain.FavouriteAccommodation;
+import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationDTO;
 
 public interface FavouriteAccommodationService {
-	Collection<FavouriteAccommodation> findAll();
+	Collection<FavouriteAccommodationDTO> findAll();
 
-	FavouriteAccommodation findOne(Long id);
+	FavouriteAccommodationDTO findOne(Long id);
 
-	FavouriteAccommodation create(FavouriteAccommodation favouriteAccommodation) throws Exception;
+	FavouriteAccommodationDTO create(FavouriteAccommodationDTO favouriteAccommodation) throws Exception;
 
-	FavouriteAccommodation update(FavouriteAccommodation greeting) throws Exception;
+	FavouriteAccommodationDTO update(FavouriteAccommodationDTO favouriteAccommodation) throws Exception;
 
 	void delete(Long id);
 

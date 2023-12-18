@@ -3,15 +3,16 @@ package com.bookingapplication.bookingapp.repository;
 import java.util.Collection;
 
 import com.bookingapplication.bookingapp.domain.FavouriteAccommodation;
+import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationDTO;
 
 public interface FavouriteAccommodationRepository {
-	Collection<FavouriteAccommodation> findAll();
+	Collection<FavouriteAccommodationDTO> findAll();
 
-	FavouriteAccommodation create(FavouriteAccommodation favouriteAccommodation);
+	FavouriteAccommodationDTO create(FavouriteAccommodationDTO favouriteAccommodation);
 
-	FavouriteAccommodation findOne(Long id);
+	FavouriteAccommodationDTO findOne(Long id);
 	
-	FavouriteAccommodation update(FavouriteAccommodation favouriteAccommodation);
+	FavouriteAccommodationDTO update(FavouriteAccommodationDTO favouriteAccommodation);
 
 	void delete(Long id);
 }
