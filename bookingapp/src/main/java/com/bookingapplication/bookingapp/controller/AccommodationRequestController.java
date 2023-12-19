@@ -88,7 +88,7 @@ public class AccommodationRequestController {
 		AccommodationRequestDTO accommodationRequestForUpdate = accommodationRequestService.findOne(id);
 		accommodationRequestForUpdate.copyValues(accommodationRequest);
 
-		AccommodationRequestDTO updatedAccommodationRequest = accommodationRequestService.update(accommodationRequestForUpdate);
+		AccommodationRequestDTO updatedAccommodationRequest = accommodationRequestService.update(accommodationRequestForUpdate, id);
 
 		if (updatedAccommodationRequest == null) {
 			return new ResponseEntity<AccommodationRequestDTO>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,15 +1,13 @@
 package com.bookingapplication.bookingapp.dtos;
 
-import com.bookingapplication.bookingapp.domain.Accommodation;
-
 public class AccommodationRequestDTO {
 
 	public Long id;
-	public Accommodation oldAccommodation;
-	public Accommodation newAccommodation;
+	public AccommodationDTO oldAccommodation;
+	public AccommodationDTO newAccommodation;
 	public AccommodationRequestType type;
 	
-	public AccommodationRequestDTO(Long id, Accommodation oldAccommodation, Accommodation newAccommodation, AccommodationRequestType type) {
+	public AccommodationRequestDTO(Long id, AccommodationDTO oldAccommodation, AccommodationDTO newAccommodation, AccommodationRequestType type) {
 		super();
 		this.id = id;
 		this.oldAccommodation = oldAccommodation;
