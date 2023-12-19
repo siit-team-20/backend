@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookingapplication.bookingapp.domain.Accommodation;
 import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
+import com.bookingapplication.bookingapp.dtos.AccommodationRequestType;
+import com.bookingapplication.bookingapp.service.AccommodationRequestService;
 import com.bookingapplication.bookingapp.service.AccommodationService;
 
 @RestController
@@ -27,6 +28,8 @@ public class AccommodationController {
 	
 	@Autowired
 	private AccommodationService accommodationService;
+	@Autowired
+	private AccommodationRequestService accommodationRequestService;
 
 	/*
 	 * Prilikom poziva metoda potrebno je navesti nekoliko parametara
@@ -77,6 +80,7 @@ public class AccommodationController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AccommodationDTO> createAccommodation(@RequestBody AccommodationDTO accommodation) throws Exception {
 		AccommodationDTO savedAccommodation = accommodationService.create(accommodation);
+		accommodationRequestService.create(savedAccommodation, AccommodationRequestType.Created);
 		return new ResponseEntity<AccommodationDTO>(savedAccommodation, HttpStatus.CREATED);
 	}
 
@@ -89,7 +93,7 @@ public class AccommodationController {
 		AccommodationDTO accommodationForUpdate = accommodationService.findOne(id);
 		accommodationForUpdate.copyValues(accommodation);
 
-		AccommodationDTO updatedAccommodation = accommodationService.update(accommodationForUpdate);
+		AccommodationDTO updatedAccommodation = accommodationService.update(accommodationForUpdate, id);
 
 		if (updatedAccommodation == null) {
 			return new ResponseEntity<AccommodationDTO>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -3,22 +3,48 @@ package com.bookingapplication.bookingapp.domain;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table
 public class Accommodation {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+    @Column
 	private String ownerEmail;
+    @Column
 	private String name;
+    @Column
 	private String description;
+    @Column
 	private String location;
+    @Column
 	private int minGuests;
+    @Column
 	private int maxGuests;
+    @Column
 	private AccommodationType accommodationType;
+    @Column
 	private List<String> benefits;
+    @Column
 	private LocalDate availabilityStart;
+    @Column
 	private LocalDate availabilityEnd;
+    @Column
 	private boolean isApproved;
+    @Column
 	private boolean isPriceByGuest;
+    @Column
 	private double price;
+    @Column
 	private int reservationCancellationDeadline;
 	//private List<String> pictures;
 
