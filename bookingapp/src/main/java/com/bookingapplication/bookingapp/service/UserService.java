@@ -1,22 +1,27 @@
 package com.bookingapplication.bookingapp.service;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.bookingapplication.bookingapp.domain.User;
-import com.bookingapplication.bookingapp.domain.UserType;
+import com.bookingapplication.bookingapp.dtos.CredentialsDTO;
+import com.bookingapplication.bookingapp.dtos.SignUpDTO;
+import com.bookingapplication.bookingapp.dtos.UserDTO;
 
 public interface UserService {
 	
-	Collection<User> findAll();
+	UserDTO login(CredentialsDTO credentialsDTO);
 
-	User findOne(String email);
+	UserDTO register(SignUpDTO signUpDTO);
+
+	UserDTO findByEmail(String email);
 	
-	Collection<User> findByType(UserType type);
+	User toUser(UserDTO userDTO);
 
-	User create(User user) throws Exception;
+	UserDTO toUserDTO(User user);
 
-	User update(User user) throws Exception;
+	List<UserDTO> toUserDTOs(List<User> user);
 
-	void delete(String email);
-
+	void updateUser(User target, User source);
+	
+	User signUpToUser(SignUpDTO signUpDTO);
 }

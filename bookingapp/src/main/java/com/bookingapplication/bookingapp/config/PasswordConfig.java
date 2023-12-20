@@ -1,4 +1,4 @@
-package com.bookingapplication.config;
+package com.bookingapplication.bookingapp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

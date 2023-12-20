@@ -1,63 +1,152 @@
 package com.bookingapplication.bookingapp.serviceImpl;
 
-import org.springframework.stereotype.Service;
-
 import com.bookingapplication.bookingapp.domain.User;
+import com.bookingapplication.bookingapp.domain.UserType;
 import com.bookingapplication.bookingapp.dtos.CredentialsDTO;
-import com.bookingapplication.bookingapp.dtos.RegistrationDTO;
+import com.bookingapplication.bookingapp.dtos.SignUpDTO;
 import com.bookingapplication.bookingapp.dtos.UserDTO;
 import com.bookingapplication.bookingapp.exceptions.AppException;
-import com.bookingapplication.bookingapp.repository.UserRepository;
+import com.bookingapplication.bookingapp.repositoryjpa.UserRepositoryJpa;
+import com.bookingapplication.bookingapp.service.UserService;
 
 import java.nio.CharBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public class UserServiceImpl {
+@Service
+public class UserServiceImpl implements UserService {
 	
-	private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+	@Autowired
+	private UserRepositoryJpa userRepositoryJpa;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
+	@Override
     public UserDTO login(CredentialsDTO credentialsDto) {
-        User user = userRepository.findByLogin(credentialsDto.login())
+        User user = userRepositoryJpa.findByEmail(credentialsDto.email())
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.password()), user.getPassword())) {
-        	
-        	// OVo  return userMapper.toUserDto(user);
-            return new UserDTO();
+            return toUserDTO(user);
         }
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
     
-    public UserDTO register(RegistrationDTO userDTO) {
+	@Override
+    public UserDTO register(SignUpDTO userDTO) {
     	
-    	Optional<User> optionalUser = userRepository.findByLogin(userDTO.email());
+    	Optional<User> optionalUser = userRepositoryJpa.findByEmail(userDTO.email());
 
         if (optionalUser.isPresent()) {
-            throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
+            throw new AppException("Email already exists", HttpStatus.BAD_REQUEST);
         }
-        /* isto valjda?
-        User findUser = userRepository.findOne(userDTO.email());
-        if (findUser != null) {
-            throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
-        }*/
+        
+        User user = signUpToUser(userDTO);
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDTO.password())));
 
-        //User user = userMapper.signUpToUser(userDTO);
-        //user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDTO.password())));
-        //User savedUser = userRepository.save(user);
+        User savedUser = userRepositoryJpa.save(user);
 
-        //return userMapper.toUserDTO(savedUser);
+        return toUserDTO(savedUser);
     }
     
-	public UserDTO findByLogin(String login) {
-        User user = userRepository.findByLogin(login)
+	@Override
+	public UserDTO findByEmail(String email) {
+        User user = userRepositoryJpa.findByEmail(email)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
         
-        // OVo  return userMapper.toUserDto(user);
-        return new UserDTO();
+        return toUserDTO(user);
+    }
+	
+	@Override
+    public User toUser(UserDTO userDTO) {
+        if ( userDTO == null ) {
+            return null;
+        }
+
+        User user = new User();
+
+        user.setEmail( userDTO.getEmail() );
+    	user.setName( userDTO.getName());
+    	user.setPhone(userDTO.getPhone());
+    	user.setSurname(userDTO.getSurname());
+    	user.setType(userDTO.getType());
+    	user.setAddress(userDTO.getAddress());
+
+        return user;
+    }
+
+    @Override
+    public UserDTO toUserDTO(User user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        String email = null;
+
+        email = user.getEmail();
+        String name = user.getName();
+        String phone = user.getPhone();
+        String surname = user.getSurname();
+        UserType type = user.getType();
+        String address = user.getAddress();
+        String password = user.getPassword();
+
+        UserDTO userDTO = new UserDTO(email, password, name, surname, address, phone, type);
+
+        return userDTO;
+    }
+
+    @Override
+    public List<UserDTO> toUserDTOs(List<User> users) {
+        if ( users == null ) {
+            return null;
+        }
+
+        List<UserDTO> list = new ArrayList<UserDTO>( users.size() );
+        for ( User user : users ) {
+            list.add( toUserDTO( user ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public void updateUser(User target, User source) {
+        if ( source == null ) {
+            return;
+        }
+
+        target.setAddress( source.getAddress() );
+        target.setEmail( source.getEmail() );
+        target.setName( source.getName() );
+        target.setPassword( source.getPassword());
+        target.setPhone( source.getPhone() );
+        target.setSurname( source.getSurname() );
+        target.setType( source.getType());
+    }
+    
+    @Override 
+    public User signUpToUser(SignUpDTO signUpDTO) {
+    	if ( signUpDTO == null ) {
+            return null;
+        }
+
+        User user = new User();
+
+        user.setEmail( signUpDTO.email() );
+    	user.setName( signUpDTO.name());
+    	user.setPhone(signUpDTO.phone());
+    	user.setSurname(signUpDTO.surname());
+    	user.setType(signUpDTO.type());
+    	user.setAddress(signUpDTO.address());
+
+        return user;
     }
 
 }

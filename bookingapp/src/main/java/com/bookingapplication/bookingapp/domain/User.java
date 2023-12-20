@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "app_user")
 public class User {
 	
 	/*
@@ -91,7 +91,7 @@ public class User {
     	this.type = type;
     }
     
-    public UserType geType() {
+    public UserType getType() {
     	return type;
     }
 

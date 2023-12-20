@@ -74,7 +74,7 @@ public class UserDTO {
     	this.type = type;
     }
     
-    public UserType geType() {
+    public UserType getType() {
     	return type;
     }
 
@@ -86,7 +86,7 @@ public class UserDTO {
 		this.email = user.getEmail();
 		this.name = user.getName();
 		this.surname = user.getSurname();
-		this.password = user.getPassword();
+		this.token = user.getToken();
 		this.phone = user.getPhone();
 		this.address = user.getAddress();
     }

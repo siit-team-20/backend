@@ -3,7 +3,6 @@ package com.bookingapplication.bookingapp.mappers;
 import java.util.List;
 
 import org.mapstruct.MappingTarget;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.bookingapplication.bookingapp.domain.AccommodationRequest;
