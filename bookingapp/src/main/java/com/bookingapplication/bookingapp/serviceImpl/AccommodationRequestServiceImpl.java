@@ -50,6 +50,17 @@ public class AccommodationRequestServiceImpl implements AccommodationRequestServ
 	}
 	
 	@Override
+	public AccommodationRequestDTO create(AccommodationDTO oldAccommodationDTO, AccommodationDTO newAccommodationDTO, AccommodationRequestType accommodationRequestType) throws Exception {
+		AccommodationRequestDTO accommodationRequestDTO = new AccommodationRequestDTO(null, oldAccommodationDTO, newAccommodationDTO, accommodationRequestType);
+		AccommodationRequest accommodationRequest = toAccommodationRequest(accommodationRequestDTO);
+		if (accommodationRequest.getId() != null) {
+			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
+		}
+		AccommodationRequest savedAccommodationRequest = accommodationRequestRepositoryJpa.save(accommodationRequest);
+		return toAccommodationRequestDTO(savedAccommodationRequest);
+	}
+	
+	@Override
 	public AccommodationRequestDTO create(AccommodationRequestDTO accommodationRequestDTO) throws Exception {
 		AccommodationRequest accommodationRequest = toAccommodationRequest(accommodationRequestDTO);
 		if (accommodationRequest.getId() != null) {

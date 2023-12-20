@@ -16,6 +16,8 @@ public interface AccommodationRequestService {
 
 	AccommodationRequestDTO create(AccommodationDTO accommodationDTO, AccommodationRequestType accommodationRequestType) throws Exception;
 	
+	AccommodationRequestDTO create(AccommodationDTO oldaccommodationDTO, AccommodationDTO newAccommodationDTO, AccommodationRequestType accommodationRequestType) throws Exception;
+	
 	AccommodationRequestDTO create(AccommodationRequestDTO accommodationRequest) throws Exception;
 
 	AccommodationRequestDTO update(AccommodationRequestDTO accommodationRequest, Long id) throws Exception;
