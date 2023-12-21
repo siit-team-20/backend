@@ -1,28 +1,33 @@
-package com.bookingapplication.config;
+package com.bookingapplication.bookingapp.config;
 
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.bookingapplication.bookingapp.domain.UserType;
 import com.bookingapplication.bookingapp.dtos.UserDTO;
 import com.bookingapplication.bookingapp.service.UserService;
 
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Component
 public class UserAuthenticationProvider {
 	
 	@Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    private final UserService userService;
+	@Autowired
+    private UserService userService;
 
     @PostConstruct
     protected void init() {
@@ -43,7 +48,7 @@ public class UserAuthenticationProvider {
                 .withClaim("surname", user.getSurname())
                 .withClaim("address", user.getAddress())
                 .withClaim("phone", user.getPhone())
-                .withClaim("type", user.geType())
+                .withClaim("type", user.getType().toString())
                 .sign(algorithm);
     }
 
@@ -55,14 +60,7 @@ public class UserAuthenticationProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        UserDTO user = UserDTO.builder()
-                .email(decoded.getSubject())
-                .name(decoded.getClaim("name").asString())
-                .surname(decoded.getClaim("surname").asString())
-                .address(decoded.getClaim("address").asString())
-                .phone(decoded.getClaim("phone").asString())
-                .type(decoded.getClaim("type").asString())
-                .build();
+        UserDTO user = new UserDTO(decoded.getSubject(), null, decoded.getClaim("name").asString(), decoded.getClaim("surname").asString(), decoded.getClaim("address").asString(), decoded.getClaim("phone").asString(), UserType.valueOf(decoded.getClaim("type").asString()));
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }
@@ -75,8 +73,7 @@ public class UserAuthenticationProvider {
 
         DecodedJWT decoded = verifier.verify(token);
         
-        // ILI FINDONE
-        UserDTO user = userService.findByLogin(decoded.getSubject());
+        UserDTO user = userService.findByEmail(decoded.getSubject());
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }

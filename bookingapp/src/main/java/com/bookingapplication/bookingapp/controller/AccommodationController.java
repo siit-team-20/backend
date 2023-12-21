@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
-import com.bookingapplication.bookingapp.dtos.AccommodationRequestType;
-import com.bookingapplication.bookingapp.service.AccommodationRequestService;
 import com.bookingapplication.bookingapp.service.AccommodationService;
 
 @RestController
@@ -28,8 +26,6 @@ public class AccommodationController {
 	
 	@Autowired
 	private AccommodationService accommodationService;
-	@Autowired
-	private AccommodationRequestService accommodationRequestService;
 
 	/*
 	 * Prilikom poziva metoda potrebno je navesti nekoliko parametara

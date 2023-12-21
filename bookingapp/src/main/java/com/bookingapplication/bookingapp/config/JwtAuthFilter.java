@@ -1,20 +1,23 @@
-package com.bookingapplication.config;
+package com.bookingapplication.bookingapp.config;
 
 import java.io.IOException;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 	
-	private final UserAuthenticationProvider userAuthenticationProvider;
+	private UserAuthenticationProvider userAuthenticationProvider;
+	
+	public JwtAuthFilter(UserAuthenticationProvider userAuthenticationProvider) {
+		this.userAuthenticationProvider = userAuthenticationProvider;
+	}
 
     @Override
     protected void doFilterInternal(

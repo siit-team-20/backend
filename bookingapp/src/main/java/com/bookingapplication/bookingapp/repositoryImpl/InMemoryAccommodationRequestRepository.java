@@ -1,19 +1,13 @@
 package com.bookingapplication.bookingapp.repositoryImpl;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Repository;
 
-import com.bookingapplication.bookingapp.domain.Accommodation;
-import com.bookingapplication.bookingapp.domain.AccommodationType;
 import com.bookingapplication.bookingapp.dtos.AccommodationRequestDTO;
-import com.bookingapplication.bookingapp.dtos.AccommodationRequestType;
 import com.bookingapplication.bookingapp.repository.AccommodationRequestRepository;
 
 @Repository
