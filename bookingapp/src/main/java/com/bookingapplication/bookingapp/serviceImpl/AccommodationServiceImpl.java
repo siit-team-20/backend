@@ -1,6 +1,7 @@
 package com.bookingapplication.bookingapp.serviceImpl;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,16 @@ public class AccommodationServiceImpl implements AccommodationService{
 	@Override
 	public Collection<AccommodationDTO> findAll() {
 		return accommodationMapper.toAccommodationDtos(accommodationRepositoryJpa.findAll());
+	}
+	
+	@Override
+	public Collection<AccommodationDTO> findAll(String ownerEmail) {
+		return accommodationMapper.toAccommodationDtos(accommodationRepositoryJpa.findAll().stream().filter(a -> a.getOwnerEmail().equals(ownerEmail)).collect(Collectors.toList()));
+	}
+	
+	@Override
+	public Collection<AccommodationDTO> findAll(boolean onlyApproved) {
+		return accommodationMapper.toAccommodationDtos(accommodationRepositoryJpa.findAll().stream().filter(a -> a.getIsApproved() == onlyApproved).collect(Collectors.toList()));
 	}
 
 	@Override

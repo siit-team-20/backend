@@ -1,5 +1,6 @@
 package com.bookingapplication.bookingapp.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
@@ -40,8 +42,14 @@ public class AccommodationController {
 	 * url: /api/accommodations GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<AccommodationDTO>> getAccommodations() {
-		Collection<AccommodationDTO> accommodations = accommodationService.findAll();
+	public ResponseEntity<Collection<AccommodationDTO>> getAccommodations(@RequestParam(required = false) String ownerEmail, @RequestParam(required = false) String onlyApproved) {
+		Collection<AccommodationDTO> accommodations = new ArrayList<AccommodationDTO>();
+		if (ownerEmail != null)
+			accommodations = accommodationService.findAll(ownerEmail);
+		else if (onlyApproved != null)
+			accommodations = accommodationService.findAll(Boolean.valueOf(onlyApproved));
+		else
+			accommodations = accommodationService.findAll();
 		return new ResponseEntity<Collection<AccommodationDTO>>(accommodations, HttpStatus.OK);
 	}
 
