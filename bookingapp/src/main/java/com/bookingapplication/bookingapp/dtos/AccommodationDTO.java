@@ -20,6 +20,7 @@ public class AccommodationDTO {
 	private LocalDate availabilityEnd;
 	private boolean isApproved;
 	private boolean isPriceByGuest;
+	private boolean isAutomaticAcceptance;
 	private double price;
 	private int reservationCancellationDeadline;
 	//private List<String> pictures;
@@ -28,7 +29,7 @@ public class AccommodationDTO {
 
 	}
 
-	public AccommodationDTO(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, double price, int reservationCancellationDeadline) {
+	public AccommodationDTO(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, double price, int reservationCancellationDeadline) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -43,6 +44,7 @@ public class AccommodationDTO {
 		this.availabilityEnd = end;
 		this.isApproved = isApproved;
 		this.isPriceByGuest = isPriceByGuest;
+		this.isAutomaticAcceptance = isAutomaticAcceptance;
 		this.reservationCancellationDeadline = reservationCancellationDeadline;
 		this.price = price;
 		//this.pictures = pictures;
@@ -139,6 +141,13 @@ public class AccommodationDTO {
 		this.isPriceByGuest = isPriceByGuest;
 	}
 	
+	public boolean getIsAutomaticAcceptance() {
+		return isAutomaticAcceptance;
+	}
+	public void setIsAutomaticAcceptance(boolean isAutomaticAcceptance) {
+		this.isAutomaticAcceptance = isAutomaticAcceptance;
+	}
+	
 	public double getPrice() {
 		return price;
 	}
@@ -173,6 +182,7 @@ public class AccommodationDTO {
 		this.availabilityEnd = accommodation.getAvailabilityEnd();
 		this.isApproved = accommodation.getIsApproved();
 		this.isPriceByGuest = accommodation.getIsPriceByGuest();
+		this.isAutomaticAcceptance = accommodation.getIsAutomaticAcceptance();
 		this.price = accommodation.getPrice();
 		this.reservationCancellationDeadline = accommodation.getReservationCancellationDeadline();
 		//this.pictures = accommodation.getPictures();
