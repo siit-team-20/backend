@@ -54,6 +54,7 @@ public class AccommodationServiceImpl implements AccommodationService{
 		accommodationToUpdate.setAvailabilityEnd(accommodation.getAvailabilityEnd());
 		accommodationToUpdate.setIsApproved(accommodation.getIsApproved());
 		accommodationToUpdate.setIsPriceByGuest(accommodation.getIsPriceByGuest());
+		accommodationToUpdate.setIsAutomaticAcceptance(accommodation.getIsAutomaticAcceptance());
 		accommodationToUpdate.setPrice(accommodation.getPrice());
 		accommodationToUpdate.setReservationCancellationDeadline(accommodation.getReservationCancellationDeadline());
 		//accommodationToUpdate.setPictures(accommodation.getPictures());
