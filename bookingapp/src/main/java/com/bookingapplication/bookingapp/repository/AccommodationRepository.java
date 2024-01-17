@@ -2,7 +2,6 @@ package com.bookingapplication.bookingapp.repository;
 
 import java.util.Collection;
 
-import com.bookingapplication.bookingapp.domain.Accommodation;
 import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 
 public interface AccommodationRepository {

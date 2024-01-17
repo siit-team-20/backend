@@ -1,41 +1,24 @@
-package com.bookingapplication.bookingapp.domain;
+package com.bookingapplication.bookingapp.dtos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.bookingapplication.bookingapp.domain.UserType;
 
-@Entity
-@Table(name = "app_user")
-public class User {
+public class UserDTO {
 	
-	/*
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Long id;
-	*/
-    @Id
 	private String email;
-    @Column
-    private String password;
-    @Column
+    private String token;
     private String name;
-    @Column
     private String surname;
-    @Column
     private String address;
-    @Column
     private String phone;
-    @Column
     private UserType type;
 
-    public User() {
+    public UserDTO() {
 
     }
     
-    public User(String email, String password, String name, String surname, String address, String phone, UserType type) {
+    public UserDTO(String email, String token, String name, String surname, String address, String phone, UserType type) {
     	this.email = email;
-    	this.password = password;
+    	this.token = token;
     	this.name = name;
     	this.surname = surname;
     	this.address = address;
@@ -51,12 +34,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setToken(String token) {
+        this.token = token;
     }
     
     public String getName() {
@@ -99,13 +82,13 @@ public class User {
         this.phone = phone;
     }
     
-    public void copyValues(User user) {
+    public void copyValues(UserDTO user) {
 		this.email = user.getEmail();
 		this.name = user.getName();
 		this.surname = user.getSurname();
-		this.password = user.getPassword();
+		this.token = user.getToken();
 		this.phone = user.getPhone();
 		this.address = user.getAddress();
     }
-	
+
 }

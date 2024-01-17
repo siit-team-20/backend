@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.bookingapplication.bookingapp.dtos.AccommodationRequestDTO;
 import com.bookingapplication.bookingapp.service.AccommodationRequestService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/accommodations/requests")
 public class AccommodationRequestController {
 	
@@ -86,7 +88,7 @@ public class AccommodationRequestController {
 		AccommodationRequestDTO accommodationRequestForUpdate = accommodationRequestService.findOne(id);
 		accommodationRequestForUpdate.copyValues(accommodationRequest);
 
-		AccommodationRequestDTO updatedAccommodationRequest = accommodationRequestService.update(accommodationRequestForUpdate);
+		AccommodationRequestDTO updatedAccommodationRequest = accommodationRequestService.update(accommodationRequestForUpdate, id);
 
 		if (updatedAccommodationRequest == null) {
 			return new ResponseEntity<AccommodationRequestDTO>(HttpStatus.INTERNAL_SERVER_ERROR);

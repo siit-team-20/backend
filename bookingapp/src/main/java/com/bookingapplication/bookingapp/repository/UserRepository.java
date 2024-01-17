@@ -3,7 +3,6 @@ package com.bookingapplication.bookingapp.repository;
 import java.util.Collection;
 
 import com.bookingapplication.bookingapp.domain.User;
-import com.bookingapplication.bookingapp.domain.UserType;
 
 public interface UserRepository {
 
@@ -11,12 +10,10 @@ public interface UserRepository {
 
 	User create(User user);
 
-	User findOne(String email);
-	
-	User findByType(UserType type);
+	User findOne(Long id);
 	
 	User update(User user);
 
-	void delete(String email);
+	void delete(Long id);
 	
 }
