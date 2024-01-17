@@ -32,6 +32,7 @@ public class AccommodationMapperImpl implements AccommodationMapper {
         accommodation.setAvailabilityEnd( accommodationDTO.getAvailabilityEnd() );
         accommodation.setIsApproved( accommodationDTO.getIsApproved() );
         accommodation.setIsPriceByGuest( accommodationDTO.getIsPriceByGuest() );
+        accommodation.setIsAutomaticAcceptance(accommodationDTO.getIsAutomaticAcceptance());
         accommodation.setPrice( accommodationDTO.getPrice() );
         accommodation.setReservationCancellationDeadline( accommodationDTO.getReservationCancellationDeadline() );
 
@@ -62,6 +63,7 @@ public class AccommodationMapperImpl implements AccommodationMapper {
         accommodationDTO.setAvailabilityEnd( accommodation.getAvailabilityEnd() );
         accommodationDTO.setIsApproved( accommodation.getIsApproved() );
         accommodationDTO.setIsPriceByGuest( accommodation.getIsPriceByGuest() );
+        accommodationDTO.setIsAutomaticAcceptance(accommodation.getIsAutomaticAcceptance());
         accommodationDTO.setPrice( accommodation.getPrice() );
         accommodationDTO.setReservationCancellationDeadline( accommodation.getReservationCancellationDeadline() );
 
@@ -116,6 +118,7 @@ public class AccommodationMapperImpl implements AccommodationMapper {
         target.setAvailabilityEnd( source.getAvailabilityEnd() );
         target.setIsApproved( source.getIsApproved() );
         target.setIsPriceByGuest( source.getIsPriceByGuest() );
+        target.setIsAutomaticAcceptance(source.getIsAutomaticAcceptance());
         target.setPrice( source.getPrice() );
         target.setReservationCancellationDeadline( source.getReservationCancellationDeadline() );
     }
