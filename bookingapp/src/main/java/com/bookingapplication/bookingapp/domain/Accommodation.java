@@ -1,6 +1,5 @@
 package com.bookingapplication.bookingapp.domain;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -29,10 +28,6 @@ public class Accommodation {
     @Column
 	private List<String> benefits;
     @Column
-	private LocalDate availabilityStart;
-    @Column
-	private LocalDate availabilityEnd;
-    @Column
 	private boolean isApproved;
     @Column
 	private boolean isPriceByGuest;
@@ -48,7 +43,7 @@ public class Accommodation {
 
 	}
 
-	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, double price, int reservationCancellationDeadline) {
+	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, double price, int reservationCancellationDeadline) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -59,13 +54,10 @@ public class Accommodation {
 		this.maxGuests = maxGuests;
 		this.accommodationType = accommodationType;
 		this.benefits = benefits;
-		this.availabilityStart = start;
-		this.availabilityEnd = end;
 		this.isApproved = isApproved;
 		this.isPriceByGuest = isPriceByGuest;
 		this.isAutomaticAcceptance = isAutomaticAcceptance;
 		this.reservationCancellationDeadline = reservationCancellationDeadline;
-		this.price = price;
 		//this.pictures = pictures;
 	}
 	
@@ -132,20 +124,6 @@ public class Accommodation {
 		this.benefits = benefits;
 	}
 	
-	public LocalDate getAvailabilityStart() {
-		return availabilityStart;
-	}
-	public void setAvailabilityStart(LocalDate availabilityStart) {
-		this.availabilityStart = availabilityStart;
-	}
-	
-	public LocalDate getAvailabilityEnd() {
-		return availabilityEnd;
-	}
-	public void setAvailabilityEnd(LocalDate availabilityEnd) {
-		this.availabilityEnd = availabilityEnd;
-	}
-	
 	public boolean getIsApproved() {
 		return isApproved;
 	}
@@ -165,13 +143,6 @@ public class Accommodation {
 	}
 	public void setIsAutomaticAcceptance(boolean isAutomaticAcceptance) {
 		this.isAutomaticAcceptance = isAutomaticAcceptance;
-	}
-	
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
 	}
 	
 	public int getReservationCancellationDeadline() {
@@ -197,12 +168,9 @@ public class Accommodation {
 		this.maxGuests = accommodation.getMaxGuests();
 		this.accommodationType = accommodation.getAccommodationType();
 		this.benefits = accommodation.getBenefits();
-		this.availabilityStart = accommodation.getAvailabilityStart();
-		this.availabilityEnd = accommodation.getAvailabilityEnd();
 		this.isApproved = accommodation.getIsApproved();
 		this.isPriceByGuest = accommodation.getIsPriceByGuest();
 		this.isAutomaticAcceptance = accommodation.getIsAutomaticAcceptance();
-		this.price = accommodation.getPrice();
 		this.reservationCancellationDeadline = accommodation.getReservationCancellationDeadline();
 		//this.pictures = accommodation.getPictures();
 	}

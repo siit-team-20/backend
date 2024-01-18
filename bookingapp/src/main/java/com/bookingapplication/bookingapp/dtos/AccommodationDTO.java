@@ -1,6 +1,5 @@
 package com.bookingapplication.bookingapp.dtos;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.bookingapplication.bookingapp.domain.AccommodationType;
@@ -16,12 +15,10 @@ public class AccommodationDTO {
 	private int maxGuests;
 	private AccommodationType accommodationType;
 	private List<String> benefits;
-	private LocalDate availabilityStart;
-	private LocalDate availabilityEnd;
+	private List<DateRangeDTO> availabilityDates;
 	private boolean isApproved;
 	private boolean isPriceByGuest;
 	private boolean isAutomaticAcceptance;
-	private double price;
 	private int reservationCancellationDeadline;
 	//private List<String> pictures;
 
@@ -29,7 +26,7 @@ public class AccommodationDTO {
 
 	}
 
-	public AccommodationDTO(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, LocalDate start, LocalDate end, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, double price, int reservationCancellationDeadline) {
+	public AccommodationDTO(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, List<DateRangeDTO> availabilityDates, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, int reservationCancellationDeadline) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -40,13 +37,11 @@ public class AccommodationDTO {
 		this.maxGuests = maxGuests;
 		this.accommodationType = accommodationType;
 		this.benefits = benefits;
-		this.availabilityStart = start;
-		this.availabilityEnd = end;
+		this.availabilityDates = availabilityDates;
 		this.isApproved = isApproved;
 		this.isPriceByGuest = isPriceByGuest;
 		this.isAutomaticAcceptance = isAutomaticAcceptance;
 		this.reservationCancellationDeadline = reservationCancellationDeadline;
-		this.price = price;
 		//this.pictures = pictures;
 	}
 	
@@ -113,18 +108,11 @@ public class AccommodationDTO {
 		this.benefits = benefits;
 	}
 	
-	public LocalDate getAvailabilityStart() {
-		return availabilityStart;
+	public List<DateRangeDTO> getAvailabilityDates() {
+		return availabilityDates;
 	}
-	public void setAvailabilityStart(LocalDate availabilityStart) {
-		this.availabilityStart = availabilityStart;
-	}
-	
-	public LocalDate getAvailabilityEnd() {
-		return availabilityEnd;
-	}
-	public void setAvailabilityEnd(LocalDate availabilityEnd) {
-		this.availabilityEnd = availabilityEnd;
+	public void setAvailabilityDates(List<DateRangeDTO> availabilityDates) {
+		this.availabilityDates = availabilityDates;
 	}
 	
 	public boolean getIsApproved() {
@@ -146,13 +134,6 @@ public class AccommodationDTO {
 	}
 	public void setIsAutomaticAcceptance(boolean isAutomaticAcceptance) {
 		this.isAutomaticAcceptance = isAutomaticAcceptance;
-	}
-	
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
 	}
 	
 	public int getReservationCancellationDeadline() {
@@ -178,12 +159,10 @@ public class AccommodationDTO {
 		this.maxGuests = accommodation.getMaxGuests();
 		this.accommodationType = accommodation.getAccommodationType();
 		this.benefits = accommodation.getBenefits();
-		this.availabilityStart = accommodation.getAvailabilityStart();
-		this.availabilityEnd = accommodation.getAvailabilityEnd();
+		this.availabilityDates = accommodation.getAvailabilityDates();
 		this.isApproved = accommodation.getIsApproved();
 		this.isPriceByGuest = accommodation.getIsPriceByGuest();
 		this.isAutomaticAcceptance = accommodation.getIsAutomaticAcceptance();
-		this.price = accommodation.getPrice();
 		this.reservationCancellationDeadline = accommodation.getReservationCancellationDeadline();
 		//this.pictures = accommodation.getPictures();
 	}
