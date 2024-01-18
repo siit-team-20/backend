@@ -101,7 +101,8 @@ public class AccommodationServiceImpl implements AccommodationService{
         accommodation.setIsApproved( accommodationDTO.getIsApproved() );
         accommodation.setIsPriceByGuest( accommodationDTO.getIsPriceByGuest() );
         accommodation.setReservationCancellationDeadline( accommodationDTO.getReservationCancellationDeadline() );
-
+        accommodation.setIsAutomaticAcceptance(accommodationDTO.getIsAutomaticAcceptance());
+        
         return accommodation;
     }
 
@@ -132,7 +133,8 @@ public class AccommodationServiceImpl implements AccommodationService{
         accommodationDTO.setIsApproved( accommodation.getIsApproved() );
         accommodationDTO.setIsPriceByGuest( accommodation.getIsPriceByGuest() );
         accommodationDTO.setReservationCancellationDeadline( accommodation.getReservationCancellationDeadline() );
-
+        accommodationDTO.setIsAutomaticAcceptance( accommodation.getIsAutomaticAcceptance() );
+        
         return accommodationDTO;
     }
 
@@ -184,6 +186,7 @@ public class AccommodationServiceImpl implements AccommodationService{
         target.setIsApproved( source.getIsApproved() );
         target.setIsPriceByGuest( source.getIsPriceByGuest() );
         target.setReservationCancellationDeadline( source.getReservationCancellationDeadline() );
+        target.setIsAutomaticAcceptance(source.getIsAutomaticAcceptance());
     }
 
 }
