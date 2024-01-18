@@ -3,7 +3,6 @@ package com.bookingapplication.bookingapp.dtos;
 import java.util.List;
 
 import com.bookingapplication.bookingapp.domain.AccommodationType;
-import com.bookingapplication.bookingapp.domain.DateRange;
 
 public class AccommodationDTO {
 	
@@ -19,6 +18,7 @@ public class AccommodationDTO {
 	private List<DateRangeDTO> availabilityDates;
 	private boolean isApproved;
 	private boolean isPriceByGuest;
+	private boolean isAutomaticAcceptance;
 	private int reservationCancellationDeadline;
 	//private List<String> pictures;
 
@@ -26,7 +26,7 @@ public class AccommodationDTO {
 
 	}
 
-	public AccommodationDTO(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, List<DateRangeDTO> availabilityDates, boolean isApproved, boolean isPriceByGuest, double price, int reservationCancellationDeadline) {
+	public AccommodationDTO(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, List<DateRangeDTO> availabilityDates, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, int reservationCancellationDeadline) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -40,6 +40,7 @@ public class AccommodationDTO {
 		this.availabilityDates = availabilityDates;
 		this.isApproved = isApproved;
 		this.isPriceByGuest = isPriceByGuest;
+		this.isAutomaticAcceptance = isAutomaticAcceptance;
 		this.reservationCancellationDeadline = reservationCancellationDeadline;
 		//this.pictures = pictures;
 	}
@@ -128,6 +129,13 @@ public class AccommodationDTO {
 		this.isPriceByGuest = isPriceByGuest;
 	}
 	
+	public boolean getIsAutomaticAcceptance() {
+		return isAutomaticAcceptance;
+	}
+	public void setIsAutomaticAcceptance(boolean isAutomaticAcceptance) {
+		this.isAutomaticAcceptance = isAutomaticAcceptance;
+	}
+	
 	public int getReservationCancellationDeadline() {
 		return reservationCancellationDeadline;
 	}
@@ -154,6 +162,7 @@ public class AccommodationDTO {
 		this.availabilityDates = accommodation.getAvailabilityDates();
 		this.isApproved = accommodation.getIsApproved();
 		this.isPriceByGuest = accommodation.getIsPriceByGuest();
+		this.isAutomaticAcceptance = accommodation.getIsAutomaticAcceptance();
 		this.reservationCancellationDeadline = accommodation.getReservationCancellationDeadline();
 		//this.pictures = accommodation.getPictures();
 	}

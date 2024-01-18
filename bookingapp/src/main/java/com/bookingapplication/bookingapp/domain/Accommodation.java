@@ -32,6 +32,10 @@ public class Accommodation {
     @Column
 	private boolean isPriceByGuest;
     @Column
+	private boolean isAutomaticAcceptance;
+    @Column
+	private double price;
+    @Column
 	private int reservationCancellationDeadline;
 	//private List<String> pictures;
 
@@ -39,7 +43,7 @@ public class Accommodation {
 
 	}
 
-	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, boolean isApproved, boolean isPriceByGuest, double price, int reservationCancellationDeadline) {
+	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, double price, int reservationCancellationDeadline) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -52,6 +56,7 @@ public class Accommodation {
 		this.benefits = benefits;
 		this.isApproved = isApproved;
 		this.isPriceByGuest = isPriceByGuest;
+		this.isAutomaticAcceptance = isAutomaticAcceptance;
 		this.reservationCancellationDeadline = reservationCancellationDeadline;
 		//this.pictures = pictures;
 	}
@@ -133,6 +138,13 @@ public class Accommodation {
 		this.isPriceByGuest = isPriceByGuest;
 	}
 	
+	public boolean getIsAutomaticAcceptance() {
+		return isAutomaticAcceptance;
+	}
+	public void setIsAutomaticAcceptance(boolean isAutomaticAcceptance) {
+		this.isAutomaticAcceptance = isAutomaticAcceptance;
+	}
+	
 	public int getReservationCancellationDeadline() {
 		return reservationCancellationDeadline;
 	}
@@ -158,6 +170,7 @@ public class Accommodation {
 		this.benefits = accommodation.getBenefits();
 		this.isApproved = accommodation.getIsApproved();
 		this.isPriceByGuest = accommodation.getIsPriceByGuest();
+		this.isAutomaticAcceptance = accommodation.getIsAutomaticAcceptance();
 		this.reservationCancellationDeadline = accommodation.getReservationCancellationDeadline();
 		//this.pictures = accommodation.getPictures();
 	}
