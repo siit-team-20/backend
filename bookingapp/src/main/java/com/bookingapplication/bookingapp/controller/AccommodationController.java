@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
+import com.bookingapplication.bookingapp.dtos.DateRangeDTO;
 import com.bookingapplication.bookingapp.service.AccommodationService;
+import com.bookingapplication.bookingapp.service.DateRangeService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,6 +30,8 @@ public class AccommodationController {
 	
 	@Autowired
 	private AccommodationService accommodationService;
+	@Autowired
+	private DateRangeService dateRangeService;
 
 	/*
 	 * Prilikom poziva metoda potrebno je navesti nekoliko parametara
@@ -82,8 +86,12 @@ public class AccommodationController {
 	 * url: /api/accommodation POST
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccommodationDTO> createAccommodation(@RequestBody AccommodationDTO accommodation) throws Exception {
-		AccommodationDTO savedAccommodation = accommodationService.create(accommodation);
+	public ResponseEntity<AccommodationDTO> createAccommodation(@RequestBody AccommodationDTO accommodationDTO) throws Exception {
+		AccommodationDTO savedAccommodation = accommodationService.create(accommodationDTO);
+		for (DateRangeDTO dateRangeDTO : accommodationDTO.getAvailabilityDates()) {
+			dateRangeDTO.setAccommodationId(savedAccommodation.getId());
+			dateRangeService.create(dateRangeDTO);
+		}
 		return new ResponseEntity<AccommodationDTO>(savedAccommodation, HttpStatus.CREATED);
 	}
 
@@ -91,10 +99,10 @@ public class AccommodationController {
 	 * url: /api/accommodation/1 PUT
 	 */
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccommodationDTO> updateAccommodation(@RequestBody AccommodationDTO accommodation, @PathVariable Long id)
+	public ResponseEntity<AccommodationDTO> updateAccommodation(@RequestBody AccommodationDTO accommodationDTO, @PathVariable Long id)
 			throws Exception {
 		AccommodationDTO accommodationForUpdate = accommodationService.findOne(id);
-		accommodationForUpdate.copyValues(accommodation);
+		accommodationForUpdate.copyValues(accommodationDTO);
 
 		AccommodationDTO updatedAccommodation = accommodationService.update(accommodationForUpdate, id);
 
@@ -111,6 +119,7 @@ public class AccommodationController {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<AccommodationDTO> deleteAccommodation(@PathVariable("id") Long id) {
 		accommodationService.delete(id);
+		dateRangeService.deleteByAccommodationId(id);
 		return new ResponseEntity<AccommodationDTO>(HttpStatus.NO_CONTENT);
 	}
 
