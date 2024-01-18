@@ -34,8 +34,6 @@ public class Accommodation {
     @Column
 	private boolean isAutomaticAcceptance;
     @Column
-	private double price;
-    @Column
 	private int reservationCancellationDeadline;
 	//private List<String> pictures;
 
@@ -43,7 +41,7 @@ public class Accommodation {
 
 	}
 
-	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, double price, int reservationCancellationDeadline) {
+	public Accommodation(Long id, String ownerEmail, String name, String description, String location, int minGuests, int maxGuests, AccommodationType accommodationType, List<String> benefits, boolean isApproved, boolean isPriceByGuest, boolean isAutomaticAcceptance, int reservationCancellationDeadline) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
