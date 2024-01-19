@@ -1,35 +1,21 @@
-package com.bookingapplication.bookingapp.domain;
+package com.bookingapplication.bookingapp.dtos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.bookingapplication.bookingapp.domain.Rating;
 
-@Entity
-@Table
-public class OwnerReview {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+public class OwnerReviewDTO {
+	
 	private Long id;
-    @Column
 	private String ownerEmail;
-    @Column
 	private String guestEmail;
-    @Column
 	private Rating rating;
-    @Column
     private String comment;
-    @Column
     private boolean isReported;
 
-    public OwnerReview() {
+    public OwnerReviewDTO() {
 
     }
     
-    public OwnerReview(Long id, String ownerEmail, String guestEmail, Rating rating, String comment, boolean isReported) {
+    public OwnerReviewDTO(Long id, String ownerEmail, String guestEmail, Rating rating, String comment, boolean isReported) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -87,11 +73,12 @@ public class OwnerReview {
 		this.isReported = isReported;
 	}
 
-    public void copyValues(OwnerReview ownerReview) {
+    public void copyValues(OwnerReviewDTO ownerReview) {
     		this.ownerEmail = ownerReview.getOwnerEmail();
     		this.guestEmail = ownerReview.getGuestEmail();
     		this.rating = ownerReview.getRating();
     		this.comment = ownerReview.getComment();
     		this.isReported = ownerReview.getIsReported();
     }
+
 }

@@ -1,35 +1,20 @@
-package com.bookingapplication.bookingapp.domain;
+package com.bookingapplication.bookingapp.dtos;
+import com.bookingapplication.bookingapp.domain.Rating;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table
-public class AccommodationReview {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+public class AccommodationReviewDTO {
+	
 	private Long id;
-    @Column
 	private String guestEmail;
-    @Column
 	private Long accommodationId;
-    @Column
 	private String comment;
-    @Column
 	private Rating rating;
-    @Column
 	private boolean isApproved;
 	
-	public AccommodationReview() {
+	public AccommodationReviewDTO() {
 
 	}
 
-	public AccommodationReview(Long id, String guestEmail, Long accommodationId, String comment, Rating rating, boolean isApproved) {
+	public AccommodationReviewDTO(Long id, String guestEmail, Long accommodationId, String comment, Rating rating, boolean isApproved) {
 		super();
 		this.id = id;
 		this.guestEmail = guestEmail;
@@ -81,7 +66,7 @@ public class AccommodationReview {
 		this.isApproved = isApproved;
 	}
 	
-	public void copyValues(AccommodationReview accommodationReview) {
+	public void copyValues(AccommodationReviewDTO accommodationReview) {
 		this.guestEmail = accommodationReview.getGuestEmail();
 		this.accommodationId = accommodationReview.getAccommodationId();
 		this.comment = accommodationReview.getComment();

@@ -2,9 +2,11 @@ package com.bookingapplication.bookingapp.controller;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,16 +14,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.domain.AccommodationReview;
+import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
+import com.bookingapplication.bookingapp.dtos.AccommodationReviewDTO;
 import com.bookingapplication.bookingapp.service.AccommodationReviewService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/accommodations/reviews")
 public class AccommodationReviewController {
 	
-	//@Autowired
+	@Autowired
 	private AccommodationReviewService accommodationReviewService;
 
 	/*
@@ -37,9 +43,15 @@ public class AccommodationReviewController {
 	 * url: /api/accommodationReviews GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<AccommodationReview>> getAccommodationReviews() {
-		Collection<AccommodationReview> accommodationReviews = accommodationReviewService.findAll();
-		return new ResponseEntity<Collection<AccommodationReview>>(accommodationReviews, HttpStatus.OK);
+	public ResponseEntity<Collection<AccommodationReviewDTO>> getAccommodationReviews(@RequestParam(required = false) String ownerEmail, @RequestParam(required = false) String accommodationId) {
+		Collection<AccommodationReviewDTO> accommodationReviews = accommodationReviewService.findAll();
+		if (ownerEmail != null)
+			accommodationReviews = accommodationReviewService.findAll(ownerEmail);
+		else if (accommodationId != null)
+			accommodationReviews = accommodationReviewService.findAll(Long.valueOf(accommodationId));
+		else
+			accommodationReviews = accommodationReviewService.findAll();
+		return new ResponseEntity<Collection<AccommodationReviewDTO>>(accommodationReviews, HttpStatus.OK);
 	}
 
 	/*
@@ -48,14 +60,14 @@ public class AccommodationReviewController {
 	 * url: /api/accommodationReviews/1 GET
 	 */
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccommodationReview> getAccommodationReview(@PathVariable("id") Long id) {
-		AccommodationReview accommodationReview = accommodationReviewService.findOne(id);
+	public ResponseEntity<AccommodationReviewDTO> getAccommodationReview(@PathVariable("id") Long id) {
+		AccommodationReviewDTO accommodationReview = accommodationReviewService.findOne(id);
 
 		if (accommodationReview == null) {
-			return new ResponseEntity<AccommodationReview>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<AccommodationReviewDTO>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<AccommodationReview>(accommodationReview, HttpStatus.OK);
+		return new ResponseEntity<AccommodationReviewDTO>(accommodationReview, HttpStatus.OK);
 	}
 
 	/*
@@ -71,36 +83,36 @@ public class AccommodationReviewController {
 	 * url: /api/accommodationReviews POST
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccommodationReview> createAccommodationReview(@RequestBody AccommodationReview accommodationReview) throws Exception {
-		AccommodationReview savedAccommodationReview = accommodationReviewService.create(accommodationReview);
-		return new ResponseEntity<AccommodationReview>(savedAccommodationReview, HttpStatus.CREATED);
+	public ResponseEntity<AccommodationReviewDTO> createAccommodationReview(@RequestBody AccommodationReviewDTO accommodationReview) throws Exception {
+		AccommodationReviewDTO savedAccommodationReview = accommodationReviewService.create(accommodationReview);
+		return new ResponseEntity<AccommodationReviewDTO>(savedAccommodationReview, HttpStatus.CREATED);
 	}
 
 	/*
 	 * url: /api/accommodationReviews/1 PUT
 	 */
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AccommodationReview> updateAccommodationReview(@RequestBody AccommodationReview accommodationReview, @PathVariable Long id)
+	public ResponseEntity<AccommodationReviewDTO> updateAccommodationReview(@RequestBody AccommodationReviewDTO accommodationReview, @PathVariable Long id)
 			throws Exception {
-		AccommodationReview accommodationReviewForUpdate = accommodationReviewService.findOne(id);
+		AccommodationReviewDTO accommodationReviewForUpdate = accommodationReviewService.findOne(id);
 		accommodationReviewForUpdate.copyValues(accommodationReview);
 
-		AccommodationReview updatedAccommodationReview = accommodationReviewService.update(accommodationReviewForUpdate);
+		AccommodationReviewDTO updatedAccommodationReview = accommodationReviewService.update(accommodationReviewForUpdate, id);
 
 		if (updatedAccommodationReview == null) {
-			return new ResponseEntity<AccommodationReview>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<AccommodationReviewDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<AccommodationReview>(updatedAccommodationReview, HttpStatus.OK);
+		return new ResponseEntity<AccommodationReviewDTO>(updatedAccommodationReview, HttpStatus.OK);
 	}
 
 	/*
 	 * url: /api/accommodationReviews/1 DELETE
 	 */
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<AccommodationReview> deleteAccommodationReview(@PathVariable("id") Long id) {
+	public ResponseEntity<AccommodationReviewDTO> deleteAccommodationReview(@PathVariable("id") Long id) {
 		accommodationReviewService.delete(id);
-		return new ResponseEntity<AccommodationReview>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<AccommodationReviewDTO>(HttpStatus.NO_CONTENT);
 	}
 
 }
