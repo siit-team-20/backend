@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.aot.AotServices.Source;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.bookingapplication.bookingapp.domain.AccommodationReservation;
@@ -82,6 +83,7 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
         accommodationReservation.setDays( accommodationReservationDTO.getDays() );
         accommodationReservation.setGuestNumber( accommodationReservationDTO.getGuestNumber() );
         accommodationReservation.setPrice( accommodationReservationDTO.getPrice() );
+        accommodationReservation.setStatus(accommodationReservationDTO.getStatus());
         
         return accommodationReservation;
 	}
@@ -102,6 +104,7 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
         accommodationReservationDTO.setDays( accommodationReservation.getDays() );
         accommodationReservationDTO.setGuestNumber( accommodationReservation.getGuestNumber() );
         accommodationReservationDTO.setPrice( accommodationReservation.getPrice() );
+        accommodationReservationDTO.setStatus(accommodationReservation.getStatus());
         
         return accommodationReservationDTO;
 	}
@@ -134,6 +137,7 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
         target.setDays( source.getDays() );
         target.setGuestNumber( source.getGuestNumber() );
         target.setPrice( source.getPrice() );
+        target.setStatus( source.getStatus());
 		
 	}
 
