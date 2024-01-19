@@ -1,41 +1,26 @@
-package com.bookingapplication.bookingapp.domain;
+package com.bookingapplication.bookingapp.dtos;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.bookingapplication.bookingapp.domain.AccommodationReservation;
+import com.bookingapplication.bookingapp.domain.ReservationStatus;
 
-@Entity
-@Table
-public class AccommodationReservation {
+public class AccommodationReservationDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-    @Column
     private String guestEmail;
-    @Column
     private Long accommodationId;
-    @Column
     private Date date;
-    @Column
     private int days;
-    @Column
     private int guestNumber;
-    @Column
     private double price;
-    @Column
     private ReservationStatus status;
     
-    public AccommodationReservation() {
+    public AccommodationReservationDTO() {
 
     }
     
-    public AccommodationReservation(Long id, String guestEmail, Long accommodationId, Date date, int days, int guestNumber, double price, ReservationStatus status) {
+    public AccommodationReservationDTO(Long id, String guestEmail, Long accommodationId, Date date, int days, int guestNumber, double price, ReservationStatus status) {
     	super();
 		this.id = id;
 		this.guestEmail = guestEmail;
@@ -55,7 +40,7 @@ public class AccommodationReservation {
         this.id = id;
     }
 
-	public String getGuestEmail() {
+    public String getGuestEmail() {
 		return guestEmail;
 	}
 
@@ -108,7 +93,7 @@ public class AccommodationReservation {
 		this.status = status;
 	}
 
-	public void copyValues(AccommodationReservation accommodationReservation) {
+	public void copyValues(AccommodationReservationDTO accommodationReservation) {
 		this.accommodationId = accommodationReservation.getAccommodationId();
 		this.date = accommodationReservation.getDate();
 		this.days = accommodationReservation.getDays();
@@ -117,7 +102,4 @@ public class AccommodationReservation {
 		this.price = accommodationReservation.getPrice();
 		this.status = accommodationReservation.getStatus();
 	}
-
-	
-
 }

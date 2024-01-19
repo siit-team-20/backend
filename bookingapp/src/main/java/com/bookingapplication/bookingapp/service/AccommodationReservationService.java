@@ -1,18 +1,25 @@
 package com.bookingapplication.bookingapp.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.bookingapplication.bookingapp.domain.AccommodationReservation;
+import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
 
 public interface AccommodationReservationService {
 
-	Collection<AccommodationReservation> findAll();
-
-	AccommodationReservation findOne(Long id);
-
-	AccommodationReservation create(AccommodationReservation reservationRequest) throws Exception;
-
-	AccommodationReservation update(AccommodationReservation reservationRequest) throws Exception;
-
+	Collection<AccommodationReservationDTO> findAll();
+	Collection<AccommodationReservationDTO> findAll(String guestEmail);
+	AccommodationReservationDTO findOne(Long id);
+	AccommodationReservationDTO create(AccommodationReservationDTO reservationRequest) throws Exception;
+	AccommodationReservationDTO update(AccommodationReservationDTO reservationRequest, Long id) throws Exception;
 	void delete(Long id);
+
+	AccommodationReservation toAccommodationReservation(AccommodationReservationDTO accommodationReservationDTO);
+
+	AccommodationReservationDTO toAccommodationReservationDTO(AccommodationReservation accommodationReservation);
+
+    List<AccommodationReservationDTO> toAccommodationReservationDtos(List<AccommodationReservation> accommodationReservations);
+
+    void updateAccommodationReservation(AccommodationReservation target, AccommodationReservation source);
 }
