@@ -9,4 +9,6 @@ import com.bookingapplication.bookingapp.domain.User;
 public interface UserRepositoryJpa extends JpaRepository<User, String> {
 
     Optional<User> findByEmail(String email);
+    
+    void deleteByEmail(String email);
 }

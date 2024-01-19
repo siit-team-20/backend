@@ -1,7 +1,9 @@
 package com.bookingapplication.bookingapp.serviceImpl;
 
+import com.bookingapplication.bookingapp.domain.Accommodation;
 import com.bookingapplication.bookingapp.domain.User;
 import com.bookingapplication.bookingapp.domain.UserType;
+import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.CredentialsDTO;
 import com.bookingapplication.bookingapp.dtos.SignUpDTO;
 import com.bookingapplication.bookingapp.dtos.UserDTO;
@@ -54,6 +56,32 @@ public class UserServiceImpl implements UserService {
 
         return toUserDTO(savedUser);
     }
+	
+	@Override
+	public UserDTO update(SignUpDTO signUpDTO, String email) throws Exception {
+		User user = userRepositoryJpa.findByEmail(email)
+                .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+		
+		User updatedUser = new User(signUpDTO.email(), "", signUpDTO.name(), signUpDTO.surname(), signUpDTO.address(), signUpDTO.phone(), signUpDTO.type());
+
+		if (signUpDTO.password().length == 0) {
+			updatedUser.setPassword(user.getPassword());
+		}
+		else {
+			updatedUser.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDTO.password())));
+		}
+
+		delete(email);
+
+        User savedUser = userRepositoryJpa.save(updatedUser);
+
+        return toUserDTO(savedUser);
+	}
+	
+	@Override
+	public void delete(String email) {
+		userRepositoryJpa.deleteById(email);
+	}
     
 	@Override
 	public UserDTO findByEmail(String email) {
