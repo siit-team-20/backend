@@ -2,9 +2,11 @@ package com.bookingapplication.bookingapp.controller;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,16 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.bookingapplication.bookingapp.domain.OwnerReview;
+import com.bookingapplication.bookingapp.dtos.OwnerReviewDTO;
 import com.bookingapplication.bookingapp.service.OwnerReviewService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/ownerReviews")
 public class OwnerReviewController {
 	
-	//@Autowired
+	@Autowired
 	private OwnerReviewService ownerReviewService;
 
 	/*
@@ -37,9 +40,13 @@ public class OwnerReviewController {
 	 * url: /api/greetings GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<OwnerReview>> getOwnerReviews() {
-		Collection<OwnerReview> ownerReviews = ownerReviewService.findAll();
-		return new ResponseEntity<Collection<OwnerReview>>(ownerReviews, HttpStatus.OK);
+	public ResponseEntity<Collection<OwnerReviewDTO>> getOwnerReviews(@RequestParam(required = false) String ownerEmail) {
+		Collection<OwnerReviewDTO> ownerReviews = ownerReviewService.findAll();
+		if (ownerEmail != null)
+			ownerReviews = ownerReviewService.findAll(ownerEmail);
+		else
+			ownerReviews = ownerReviewService.findAll();
+		return new ResponseEntity<Collection<OwnerReviewDTO>>(ownerReviews, HttpStatus.OK);
 	}
 
 	/*
@@ -48,14 +55,14 @@ public class OwnerReviewController {
 	 * url: /api/greetings/1 GET
 	 */
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<OwnerReview> getOwnerReview(@PathVariable("id") Long id) {
-		OwnerReview ownerReview = ownerReviewService.findOne(id);
+	public ResponseEntity<OwnerReviewDTO> getOwnerReview(@PathVariable("id") Long id) {
+		OwnerReviewDTO ownerReview = ownerReviewService.findOne(id);
 
 		if (ownerReview == null) {
-			return new ResponseEntity<OwnerReview>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<OwnerReviewDTO>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<OwnerReview>(ownerReview, HttpStatus.OK);
+		return new ResponseEntity<OwnerReviewDTO>(ownerReview, HttpStatus.OK);
 	}
 
 	/*
@@ -71,36 +78,36 @@ public class OwnerReviewController {
 	 * url: /api/greetings POST
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<OwnerReview> createOwnerReview(@RequestBody OwnerReview ownerReview) throws Exception {
-		OwnerReview savedReview = ownerReviewService.create(ownerReview);
-		return new ResponseEntity<OwnerReview>(savedReview, HttpStatus.CREATED);
+	public ResponseEntity<OwnerReviewDTO> createOwnerReview(@RequestBody OwnerReviewDTO ownerReview) throws Exception {
+		OwnerReviewDTO savedReview = ownerReviewService.create(ownerReview);
+		return new ResponseEntity<OwnerReviewDTO>(savedReview, HttpStatus.CREATED);
 	}
 
 	/*
 	 * url: /api/greetings/1 PUT
 	 */
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<OwnerReview> updateOwnerReview(@RequestBody OwnerReview ownerReview, @PathVariable Long id)
+	public ResponseEntity<OwnerReviewDTO> updateOwnerReview(@RequestBody OwnerReviewDTO ownerReview, @PathVariable Long id)
 			throws Exception {
-		OwnerReview reviewForUpdate = ownerReviewService.findOne(id);
+		OwnerReviewDTO reviewForUpdate = ownerReviewService.findOne(id);
 		reviewForUpdate.copyValues(ownerReview);
 
-		OwnerReview updatedReview = ownerReviewService.update(reviewForUpdate);
+		OwnerReviewDTO updatedReview = ownerReviewService.update(reviewForUpdate, id);
 
 		if (updatedReview == null) {
-			return new ResponseEntity<OwnerReview>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<OwnerReviewDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<OwnerReview>(updatedReview, HttpStatus.OK);
+		return new ResponseEntity<OwnerReviewDTO>(updatedReview, HttpStatus.OK);
 	}
 
 	/*
 	 * url: /api/greetings/1 DELETE
 	 */
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<OwnerReview> deleteOwnerReview(@PathVariable("id") Long id) {
+	public ResponseEntity<OwnerReviewDTO> deleteOwnerReview(@PathVariable("id") Long id) {
 		ownerReviewService.delete(id);
-		return new ResponseEntity<OwnerReview>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<OwnerReviewDTO>(HttpStatus.NO_CONTENT);
 	}
 
 }

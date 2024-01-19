@@ -3,9 +3,11 @@ package com.bookingapplication.bookingapp.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +21,11 @@ import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
 import com.bookingapplication.bookingapp.service.AccommodationReservationService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/accommodations/reservations")
 public class AccommodationReservationController {
 
-	//@Autowired
+	@Autowired
 	private AccommodationReservationService accommodationReservationService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
