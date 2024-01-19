@@ -5,31 +5,35 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.aot.AotServices.Source;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.bookingapplication.bookingapp.domain.AccommodationReservation;
+import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
+import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.exceptions.AppException;
 import com.bookingapplication.bookingapp.repositoryjpa.AccommodationReservationRepositoryJpa;
 import com.bookingapplication.bookingapp.service.AccommodationReservationService;
+import com.bookingapplication.bookingapp.service.AccommodationService;
 
 @Service
 public class AccommodationReservationServiceImpl implements AccommodationReservationService {
 
 	@Autowired
 	private AccommodationReservationRepositoryJpa accommodationReservationRepositoryJpa;
+	@Autowired
+	private AccommodationService accommodationService;
 	
 	public AccommodationReservationServiceImpl() {
 	}
 	
 	@Override
-	public Collection<AccommodationReservationDTO> findAll() {
+	public Collection<ReservationWithAccommodationDTO> findAll() {
 		return toAccommodationReservationDtos(accommodationReservationRepositoryJpa.findAll());
 	}
 
 	@Override
-	public Collection<AccommodationReservationDTO> findAll(String guestEmail) {
+	public Collection<ReservationWithAccommodationDTO> findAll(String guestEmail) {
 		return toAccommodationReservationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getGuestEmail().equals(guestEmail)).collect(Collectors.toList()));
 	}
 
@@ -139,6 +143,73 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
         target.setPrice( source.getPrice() );
         target.setStatus( source.getStatus());
 		
+	}
+
+	@Override
+	public AccommodationReservation toAccommodationReservation(
+			ReservationWithAccommodationDTO reservationWithAccommodationDTO) {
+		if ( reservationWithAccommodationDTO == null ) {
+            return null;
+        }
+
+        AccommodationReservation accommodationReservation = new AccommodationReservation();
+
+        accommodationReservation.setId( reservationWithAccommodationDTO.getId() );
+        accommodationReservation.setGuestEmail( reservationWithAccommodationDTO.getGuestEmail() );
+
+        Long accommodationId = null;
+        if (reservationWithAccommodationDTO.getAccommodation() != null)
+        	accommodationId = reservationWithAccommodationDTO.getAccommodation().getId();
+        accommodationReservation.setAccommodationId( accommodationId );
+        
+        accommodationReservation.setDate( reservationWithAccommodationDTO.getDate() );
+        accommodationReservation.setDays( reservationWithAccommodationDTO.getDays() );
+        accommodationReservation.setGuestNumber( reservationWithAccommodationDTO.getGuestNumber() );
+        accommodationReservation.setPrice( reservationWithAccommodationDTO.getPrice() );
+        accommodationReservation.setStatus(reservationWithAccommodationDTO.getStatus());
+        
+        return accommodationReservation;
+	}
+
+	@Override
+	public ReservationWithAccommodationDTO toReservationWithAccommodationDTO(
+			AccommodationReservation accommodationReservation) {
+		if ( accommodationReservation == null ) {
+            return null;
+        }
+
+		ReservationWithAccommodationDTO reservationWithAccommodationDTO = new ReservationWithAccommodationDTO();
+
+		reservationWithAccommodationDTO.setId( accommodationReservation.getId() );
+		reservationWithAccommodationDTO.setGuestEmail( accommodationReservation.getGuestEmail() );
+
+        AccommodationDTO accommodation = null;
+        if (accommodationReservation.getAccommodationId() != null)
+        	accommodation = accommodationService.findOne(accommodationReservation.getAccommodationId());
+        
+        reservationWithAccommodationDTO.setAccommodation( accommodation );
+        reservationWithAccommodationDTO.setDate( accommodationReservation.getDate() );
+        reservationWithAccommodationDTO.setDays( accommodationReservation.getDays() );
+        reservationWithAccommodationDTO.setGuestNumber( accommodationReservation.getGuestNumber() );
+        reservationWithAccommodationDTO.setPrice( accommodationReservation.getPrice() );
+        reservationWithAccommodationDTO.setStatus(accommodationReservation.getStatus());
+        
+        return reservationWithAccommodationDTO;
+	}
+
+	@Override
+	public List<ReservationWithAccommodationDTO> toReservationWithAccommodationDtos(
+			List<AccommodationReservation> accommodationReservations) {
+		if ( accommodationReservations == null ) {
+            return null;
+        }
+
+        List<ReservationWithAccommodationDTO> list = new ArrayList<ReservationWithAccommodationDTO>( accommodationReservations.size() );
+        for ( AccommodationReservation accommodationReservation1 : accommodationReservations ) {
+            list.add( toReservationWithAccommodationDTO( accommodationReservation1 ) );
+        }
+
+        return list;
 	}
 
 }

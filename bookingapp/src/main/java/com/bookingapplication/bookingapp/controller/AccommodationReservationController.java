@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
+import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.service.AccommodationReservationService;
 
 @RestController
@@ -29,13 +30,13 @@ public class AccommodationReservationController {
 	private AccommodationReservationService accommodationReservationService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<AccommodationReservationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
-		Collection<AccommodationReservationDTO> accommodationReservations = new ArrayList<AccommodationReservationDTO>();
+	public ResponseEntity<Collection<ReservationWithAccommodationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
+		Collection<ReservationWithAccommodationDTO> accommodationReservations = new ArrayList<ReservationWithAccommodationDTO>();
 		if (guestEmail != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail);
 		else
 			accommodationReservations = accommodationReservationService.findAll();
-		return new ResponseEntity<Collection<AccommodationReservationDTO>>(accommodationReservations, HttpStatus.OK);
+		return new ResponseEntity<Collection<ReservationWithAccommodationDTO>>(accommodationReservations, HttpStatus.OK);
 	}
 	
 	
