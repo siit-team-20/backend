@@ -3,16 +3,17 @@ package com.bookingapplication.bookingapp.repository;
 import java.util.Collection;
 
 import com.bookingapplication.bookingapp.domain.Report;
+import com.bookingapplication.bookingapp.dtos.ReportDTO;
 
 public interface ReportRepository {
 
-	Collection<Report> findAll();
+	Collection<ReportDTO> findAll();
 
-	Report create(Report user);
+	ReportDTO create(ReportDTO user);
 
-	Report findOne(Long id);
+	ReportDTO findOne(Long id);
 	
-	Report update(Report user);
+	ReportDTO update(ReportDTO user);
 
 	void delete(Long id);
 	

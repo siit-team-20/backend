@@ -56,7 +56,7 @@ public class FavouriteAccommodationController {
 		FavouriteAccommodationDTO favouriteAccommodationForUpdate = favouriteAccommodationService.findOne(id);
 		favouriteAccommodationForUpdate.copyValues(FavouriteAccommodation);
 
-		FavouriteAccommodationDTO updatedFavouriteAccommodation = favouriteAccommodationService.update(favouriteAccommodationForUpdate);
+		FavouriteAccommodationDTO updatedFavouriteAccommodation = favouriteAccommodationService.update(favouriteAccommodationForUpdate, id);
 
 		if (updatedFavouriteAccommodation == null) {
 			return new ResponseEntity<FavouriteAccommodationDTO>(HttpStatus.INTERNAL_SERVER_ERROR);

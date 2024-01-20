@@ -10,10 +10,6 @@ public class FavouriteAccommodationDTO {
 
     }
     
-    public void copyValues(FavouriteAccommodationDTO favouriteAccommodation) {
-    		this.accommodationId = favouriteAccommodation.getAccommodationId();
-    }
-    
     public Long getId() {
     	return id;
     }
@@ -36,6 +32,12 @@ public class FavouriteAccommodationDTO {
 
 	public void setAccommodationId(Long accommodationId) {
 		this.accommodationId = accommodationId;
+	}
+	
+	public void copyValues(FavouriteAccommodationDTO favouriteAccommodation) {
+		this.accommodationId = favouriteAccommodation.getAccommodationId();
+		this.guestid = favouriteAccommodation.getGuestid();
+		
 	}
 	
 }

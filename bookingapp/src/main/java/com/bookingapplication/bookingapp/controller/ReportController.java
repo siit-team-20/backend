@@ -2,6 +2,7 @@ package com.bookingapplication.bookingapp.controller;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.domain.Report;
+import com.bookingapplication.bookingapp.dtos.ReportDTO;
 import com.bookingapplication.bookingapp.service.ReportService;
 
 @RestController
 @RequestMapping("/api/reports")
 public class ReportController {
 
-	//@Autowired
+	@Autowired
 	private ReportService reportService;
 
 	/*
@@ -37,9 +39,9 @@ public class ReportController {
 	 * url: /api/reports GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<Report>> getUsers() {
-		Collection<Report> reports = reportService.findAll();
-		return new ResponseEntity<Collection<Report>>(reports, HttpStatus.OK);
+	public ResponseEntity<Collection<ReportDTO>> getUsers() {
+		Collection<ReportDTO> reports = reportService.findAll();
+		return new ResponseEntity<Collection<ReportDTO>>(reports, HttpStatus.OK);
 	}
 
 	/*
@@ -48,14 +50,14 @@ public class ReportController {
 	 * url: /api/reports/1 GET
 	 */
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Report> getUser(@PathVariable("id") Long id) {
-		Report report = reportService.findOne(id);
+	public ResponseEntity<ReportDTO> getUser(@PathVariable("id") Long id) {
+		ReportDTO report = reportService.findOne(id);
 
 		if (report == null) {
-			return new ResponseEntity<Report>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ReportDTO>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Report>(report, HttpStatus.OK);
+		return new ResponseEntity<ReportDTO>(report, HttpStatus.OK);
 	}
 
 	/*
@@ -71,36 +73,36 @@ public class ReportController {
 	 * url: /api/reports POST
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Report> createGreeting(@RequestBody Report report) throws Exception {
-		Report savedReport = reportService.create(report);
-		return new ResponseEntity<Report>(savedReport, HttpStatus.CREATED);
+	public ResponseEntity<ReportDTO> create(@RequestBody ReportDTO report) throws Exception {
+		ReportDTO savedReport = reportService.create(report);
+		return new ResponseEntity<ReportDTO>(savedReport, HttpStatus.CREATED);
 	}
 
 	/*
 	 * url: /api/reports/1 PUT
 	 */
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Report> updateGreeting(@RequestBody Report report, @PathVariable Long id)
+	public ResponseEntity<ReportDTO> update(@RequestBody ReportDTO report, @PathVariable Long id)
 			throws Exception {
-		Report reportForUpdate = reportService.findOne(id);
+		ReportDTO reportForUpdate = reportService.findOne(id);
 		reportForUpdate.copyValues(report);
 
-		Report updatedReport = reportService.update(reportForUpdate);
+		ReportDTO updatedReport = reportService.update(reportForUpdate, id);
 
 		if (updatedReport == null) {
-			return new ResponseEntity<Report>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ReportDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<Report>(updatedReport, HttpStatus.OK);
+		return new ResponseEntity<ReportDTO>(updatedReport, HttpStatus.OK);
 	}
 
 	/*
 	 * url: /api/reports/1 DELETE
 	 */
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Report> deleteGreeting(@PathVariable("id") Long id) {
+	public ResponseEntity<ReportDTO> delete(@PathVariable("id") Long id) {
 		reportService.delete(id);
-		return new ResponseEntity<Report>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<ReportDTO>(HttpStatus.NO_CONTENT);
 	}
 	
 }
