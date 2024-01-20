@@ -14,6 +14,7 @@ public interface AccommodationReservationService {
 	AccommodationReservationDTO create(AccommodationReservationDTO reservationRequest) throws Exception;
 	AccommodationReservationDTO update(AccommodationReservationDTO reservationRequest, Long id) throws Exception;
 	void delete(Long id);
+	void updateStatuses();
 
 	AccommodationReservation toAccommodationReservation(AccommodationReservationDTO accommodationReservationDTO);
 

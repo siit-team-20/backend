@@ -1,5 +1,6 @@
 package com.bookingapplication.bookingapp.domain;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -21,7 +22,7 @@ public class AccommodationReservation {
     @Column
     private Long accommodationId;
     @Column
-    private Date date;
+    private LocalDate date;
     @Column
     private int days;
     @Column
@@ -35,7 +36,7 @@ public class AccommodationReservation {
 
     }
     
-    public AccommodationReservation(Long id, String guestEmail, Long accommodationId, Date date, int days, int guestNumber, double price, ReservationStatus status) {
+    public AccommodationReservation(Long id, String guestEmail, Long accommodationId, LocalDate date, int days, int guestNumber, double price, ReservationStatus status) {
     	super();
 		this.id = id;
 		this.guestEmail = guestEmail;
@@ -71,11 +72,11 @@ public class AccommodationReservation {
 		this.accommodationId = accommodationId;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

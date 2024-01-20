@@ -1,14 +1,15 @@
 package com.bookingapplication.bookingapp.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.aot.AotServices.Source;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.bookingapplication.bookingapp.domain.AccommodationReservation;
+import com.bookingapplication.bookingapp.domain.ReservationStatus;
 import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
 import com.bookingapplication.bookingapp.exceptions.AppException;
 import com.bookingapplication.bookingapp.repositoryjpa.AccommodationReservationRepositoryJpa;
@@ -65,6 +66,18 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 	@Override
 	public void delete(Long id) {
 		accommodationReservationRepositoryJpa.deleteById(id);
+	}
+	
+	public void updateStatuses() {
+		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
+		for (AccommodationReservation accommodationReservation : accommodationReservations) {
+			LocalDate endDate = accommodationReservation.getDate();
+			endDate.plusDays(accommodationReservation.getDays());
+			if (accommodationReservation.getStatus() == ReservationStatus.Approved && endDate.isBefore(LocalDate.now())) {
+				accommodationReservation.setStatus(ReservationStatus.Finished);
+		        accommodationReservationRepositoryJpa.save(accommodationReservation);
+			}
+		}
 	}
 
 	@Override
