@@ -29,8 +29,13 @@ public class AccommodationReservationController {
 	@Autowired
 	private AccommodationReservationService accommodationReservationService;
 	
+	public void updateReservations() {
+		accommodationReservationService.updateStatuses();
+	}
+	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<ReservationWithAccommodationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
+	public ResponseEntity<Collection<AccommodationReservationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
+		updateReservations();
 		Collection<ReservationWithAccommodationDTO> accommodationReservations = new ArrayList<ReservationWithAccommodationDTO>();
 		if (guestEmail != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail);
@@ -42,6 +47,7 @@ public class AccommodationReservationController {
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AccommodationReservationDTO> getAccommodationReservation(@PathVariable("id") Long id) {
+		updateReservations();
 		AccommodationReservationDTO accommodaitonReservation = accommodationReservationService.findOne(id);
 
 		if (accommodaitonReservation == null) {
@@ -53,6 +59,7 @@ public class AccommodationReservationController {
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AccommodationReservationDTO> createAccommodationReservation(@RequestBody AccommodationReservationDTO accommodationReservation) throws Exception {
+		updateReservations();
 		AccommodationReservationDTO savedAccommodationReservation = accommodationReservationService.create(accommodationReservation);
 		return new ResponseEntity<AccommodationReservationDTO>(savedAccommodationReservation, HttpStatus.CREATED);
 	}
@@ -60,6 +67,7 @@ public class AccommodationReservationController {
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AccommodationReservationDTO> updateAccommodationReservation(@RequestBody AccommodationReservationDTO accommodationReservation, @PathVariable Long id)
 			throws Exception {
+		updateReservations();
 		AccommodationReservationDTO accommodationReservationForUpdate = accommodationReservationService.findOne(id);
 		accommodationReservationForUpdate.copyValues(accommodationReservation);
 
@@ -71,8 +79,10 @@ public class AccommodationReservationController {
 		
 		return new ResponseEntity<AccommodationReservationDTO>(updatedAccommodationReservation, HttpStatus.OK);
 	}
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<AccommodationReservationDTO> deleteAccommodationReservation(@PathVariable("id") Long id) {
+		updateReservations();
 		accommodationReservationService.delete(id);
 		return new ResponseEntity<AccommodationReservationDTO>(HttpStatus.NO_CONTENT);
 	}
