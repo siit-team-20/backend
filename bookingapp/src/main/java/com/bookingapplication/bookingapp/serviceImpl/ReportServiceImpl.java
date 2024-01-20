@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.bookingapplication.bookingapp.domain.Report;
 import com.bookingapplication.bookingapp.dtos.ReportDTO;
@@ -12,6 +13,7 @@ import com.bookingapplication.bookingapp.exceptions.AppException;
 import com.bookingapplication.bookingapp.repositoryjpa.ReportRepositoryJpa;
 import com.bookingapplication.bookingapp.service.ReportService;
 
+@Service
 public class ReportServiceImpl implements ReportService {
 
 	private ReportRepositoryJpa reportRepositoryJpa;

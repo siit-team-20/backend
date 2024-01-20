@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,24 +21,14 @@ import com.bookingapplication.bookingapp.dtos.ReportDTO;
 import com.bookingapplication.bookingapp.service.ReportService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/reports")
+
 public class ReportController {
 
 	@Autowired
 	private ReportService reportService;
 
-	/*
-	 * Prilikom poziva metoda potrebno je navesti nekoliko parametara
-	 * unutar @@GetMapping anotacije: url kao vrednost 'value' atributa (ukoliko se
-	 * izostavi, ruta do metode je ruta do kontrolera), u slucaju GET zahteva
-	 * atribut 'produce' sa naznakom tipa odgovora (u nasem slucaju JSON).
-	 * 
-	 * Kao povratna vrednost moze se vracati klasa ResponseEntity koja sadrzi i telo
-	 * (sam podatak) i zaglavlje (metapodatke) i status kod, ili samo telo ako se
-	 * metoda anotira sa @ResponseBody.
-	 * 
-	 * url: /api/reports GET
-	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<ReportDTO>> getUsers() {
 		Collection<ReportDTO> reports = reportService.findAll();
