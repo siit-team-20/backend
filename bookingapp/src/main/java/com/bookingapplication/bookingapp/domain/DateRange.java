@@ -38,9 +38,9 @@ public class DateRange {
 	}
 	
 	public boolean IsOverlapping(DateRange other) {
-		if (other.startDate.isBefore(startDate) && other.endDate.isBefore(endDate))
+		if (other.startDate.isBefore(startDate) && other.endDate.isBefore(startDate))
 			return false;
-		if (other.startDate.isAfter(startDate) && other.endDate.isAfter(endDate))
+		if (other.startDate.isAfter(endDate) && other.endDate.isAfter(endDate))
 			return false;
 		return true;
 	}

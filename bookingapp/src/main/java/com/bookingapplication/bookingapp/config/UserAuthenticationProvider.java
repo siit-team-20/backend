@@ -1,6 +1,7 @@
 package com.bookingapplication.bookingapp.config;
 
 import java.util.Base64;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -62,7 +64,7 @@ public class UserAuthenticationProvider {
 
         UserDTO user = new UserDTO(decoded.getSubject(), null, decoded.getClaim("name").asString(), decoded.getClaim("surname").asString(), decoded.getClaim("address").asString(), decoded.getClaim("phone").asString(), UserType.valueOf(decoded.getClaim("type").asString()));
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 
     public Authentication validateTokenStrongly(String token) {
@@ -75,7 +77,7 @@ public class UserAuthenticationProvider {
         
         UserDTO user = userService.findByEmail(decoded.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 
 }

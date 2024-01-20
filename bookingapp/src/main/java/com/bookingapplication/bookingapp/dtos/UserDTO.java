@@ -1,5 +1,12 @@
 package com.bookingapplication.bookingapp.dtos;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import com.bookingapplication.bookingapp.domain.UserType;
 
 public class UserDTO {
@@ -24,6 +31,12 @@ public class UserDTO {
     	this.address = address;
     	this.phone = phone;
     	this.type = type;
+    }
+    
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+    	List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+    	list.add(new SimpleGrantedAuthority("ROLE_" + this.getType()));
+    	return list;
     }
 
     public String getEmail() {

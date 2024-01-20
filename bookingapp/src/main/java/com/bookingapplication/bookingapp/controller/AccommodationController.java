@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,7 @@ public class AccommodationController {
 	 * 
 	 * url: /api/accommodations GET
 	 */
+	//@PreAuthorize("hasRole('ROLE_Admin')")
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<AccommodationDTO>> getAccommodations(@RequestParam(required = false) String ownerEmail, @RequestParam(required = false) String onlyApproved) {
 		Collection<AccommodationDTO> accommodations = new ArrayList<AccommodationDTO>();
