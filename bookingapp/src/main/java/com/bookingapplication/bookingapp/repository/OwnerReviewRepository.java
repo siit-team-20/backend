@@ -3,15 +3,16 @@ package com.bookingapplication.bookingapp.repository;
 import java.util.Collection;
 
 import com.bookingapplication.bookingapp.domain.OwnerReview;
+import com.bookingapplication.bookingapp.dtos.OwnerReviewDTO;
 
 public interface OwnerReviewRepository {
-	Collection<OwnerReview> findAll();
+	Collection<OwnerReviewDTO> findAll();
 
-	OwnerReview create(OwnerReview ownerReview);
+	OwnerReviewDTO create(OwnerReviewDTO ownerReview);
 
-	OwnerReview findOne(Long id);
+	OwnerReviewDTO findOne(Long id);
 	
-	OwnerReview update(OwnerReview ownerReview);
+	OwnerReviewDTO update(OwnerReviewDTO ownerReview);
 
 	void delete(Long id);
 }
