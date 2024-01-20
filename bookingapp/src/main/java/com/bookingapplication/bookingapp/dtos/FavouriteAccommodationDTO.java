@@ -3,12 +3,18 @@ package com.bookingapplication.bookingapp.dtos;
 public class FavouriteAccommodationDTO {
 
 	private Long id;
-	private Long guestid;
+	private String guestEmail;
     private Long accommodationId;
 
     public FavouriteAccommodationDTO() {
 
     }
+    
+    public FavouriteAccommodationDTO(Long id, String guestEmail, Long accommodationId) {
+		this.id = id;
+		this.guestEmail = guestEmail;
+		this.accommodationId = accommodationId;
+	}
     
     public Long getId() {
     	return id;
@@ -18,12 +24,12 @@ public class FavouriteAccommodationDTO {
     	this.id = id;
     }
 
-	public Long getGuestid() {
-		return guestid;
+	public String getGuestEmail() {
+		return guestEmail;
 	}
 
-	public void setGuestid(Long guestid) {
-		this.guestid = guestid;
+	public void setGuestEmail(String guestEmail) {
+		this.guestEmail = guestEmail;
 	}
 
 	public Long getAccommodationId() {
@@ -36,7 +42,7 @@ public class FavouriteAccommodationDTO {
 	
 	public void copyValues(FavouriteAccommodationDTO favouriteAccommodation) {
 		this.accommodationId = favouriteAccommodation.getAccommodationId();
-		this.guestid = favouriteAccommodation.getGuestid();
+		this.guestEmail = favouriteAccommodation.getGuestEmail();
 		
 	}
 	
