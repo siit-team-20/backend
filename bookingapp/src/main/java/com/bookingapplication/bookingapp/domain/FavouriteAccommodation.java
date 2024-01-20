@@ -1,16 +1,36 @@
 package com.bookingapplication.bookingapp.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table
 public class FavouriteAccommodation {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private Long guestid;
+	@Column
+	private String guestEmail;
+	@Column
     private Long accommodationId;
 
     public FavouriteAccommodation() {
 
     }
     
+    public FavouriteAccommodation(Long id, String guestEmail, Long accommodationId) {
+		this.id = id;
+		this.guestEmail = guestEmail;
+		this.accommodationId = accommodationId;
+	}
+    
     public void copyValues(FavouriteAccommodation favouriteAccommodation) {
+    	this.guestEmail = favouriteAccommodation.getGuestEmail();
     		this.accommodationId = favouriteAccommodation.getAccommodationId();
     }
     
@@ -22,12 +42,12 @@ public class FavouriteAccommodation {
     	this.id = id;
     }
 
-	public Long getGuestid() {
-		return guestid;
+	public String getGuestEmail() {
+		return guestEmail;
 	}
 
-	public void setGuestid(Long guestid) {
-		this.guestid = guestid;
+	public void setGuestEmail(String guestEmail) {
+		this.guestEmail = guestEmail;
 	}
 
 	public Long getAccommodationId() {

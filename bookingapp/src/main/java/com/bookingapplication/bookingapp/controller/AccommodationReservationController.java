@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
+import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.service.AccommodationReservationService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/accommodations/reservations")
 public class AccommodationReservationController {
 
@@ -33,12 +36,12 @@ public class AccommodationReservationController {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<AccommodationReservationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
 		updateReservations();
-		Collection<AccommodationReservationDTO> accommodationReservations = new ArrayList<AccommodationReservationDTO>();
+		Collection<ReservationWithAccommodationDTO> accommodationReservations = new ArrayList<ReservationWithAccommodationDTO>();
 		if (guestEmail != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail);
 		else
 			accommodationReservations = accommodationReservationService.findAll();
-		return new ResponseEntity<Collection<AccommodationReservationDTO>>(accommodationReservations, HttpStatus.OK);
+		return new ResponseEntity<Collection<ReservationWithAccommodationDTO>>(accommodationReservations, HttpStatus.OK);
 	}
 	
 	

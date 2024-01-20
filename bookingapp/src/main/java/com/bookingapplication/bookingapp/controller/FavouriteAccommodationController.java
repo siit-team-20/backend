@@ -1,5 +1,6 @@
 package com.bookingapplication.bookingapp.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.service.FavouriteAccommodationService;
 import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationDTO;
+import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationWithAccommodationDTO;
+import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 
 @RestController
 @RequestMapping("/api/accommodations/favourites")
@@ -26,9 +30,13 @@ public class FavouriteAccommodationController {
 	private FavouriteAccommodationService favouriteAccommodationService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<FavouriteAccommodationDTO>> getFavouriteAccommodations() {
-		Collection<FavouriteAccommodationDTO> favouriteAccommodations = favouriteAccommodationService.findAll();
-		return new ResponseEntity<Collection<FavouriteAccommodationDTO>>(favouriteAccommodations, HttpStatus.OK);
+	public ResponseEntity<Collection<FavouriteAccommodationWithAccommodationDTO>> getFavouriteAccommodations(@RequestParam(required = false) String guestEmail) {
+		Collection<FavouriteAccommodationWithAccommodationDTO> favouriteAccommodations = new ArrayList<FavouriteAccommodationWithAccommodationDTO>();
+		if (guestEmail != null)
+			favouriteAccommodations = favouriteAccommodationService.findAll(guestEmail);
+		else
+			favouriteAccommodations = favouriteAccommodationService.findAll();
+		return new ResponseEntity<Collection<FavouriteAccommodationWithAccommodationDTO>>(favouriteAccommodations, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,7 +64,7 @@ public class FavouriteAccommodationController {
 		FavouriteAccommodationDTO favouriteAccommodationForUpdate = favouriteAccommodationService.findOne(id);
 		favouriteAccommodationForUpdate.copyValues(FavouriteAccommodation);
 
-		FavouriteAccommodationDTO updatedFavouriteAccommodation = favouriteAccommodationService.update(favouriteAccommodationForUpdate);
+		FavouriteAccommodationDTO updatedFavouriteAccommodation = favouriteAccommodationService.update(favouriteAccommodationForUpdate, id);
 
 		if (updatedFavouriteAccommodation == null) {
 			return new ResponseEntity<FavouriteAccommodationDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
