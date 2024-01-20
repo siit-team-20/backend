@@ -34,7 +34,7 @@ public class AccommodationReservationController {
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<AccommodationReservationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
+	public ResponseEntity<Collection<ReservationWithAccommodationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
 		updateReservations();
 		Collection<ReservationWithAccommodationDTO> accommodationReservations = new ArrayList<ReservationWithAccommodationDTO>();
 		if (guestEmail != null)

@@ -1,5 +1,6 @@
 package com.bookingapplication.bookingapp.dtos;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.bookingapplication.bookingapp.domain.ReservationStatus;
@@ -9,7 +10,7 @@ public class ReservationWithAccommodationDTO {
 	private Long id;
     private String guestEmail;
     private AccommodationDTO accommodation;
-    private Date date;
+    private LocalDate date;
     private int days;
     private int guestNumber;
     private double price;
@@ -19,7 +20,7 @@ public class ReservationWithAccommodationDTO {
 
     }
     
-    public ReservationWithAccommodationDTO(Long id, String guestEmail, AccommodationDTO accommodation, Date date, int days, int guestNumber, double price, ReservationStatus status) {
+    public ReservationWithAccommodationDTO(Long id, String guestEmail, AccommodationDTO accommodation, LocalDate date, int days, int guestNumber, double price, ReservationStatus status) {
     	super();
 		this.id = id;
 		this.guestEmail = guestEmail;
@@ -55,11 +56,11 @@ public class ReservationWithAccommodationDTO {
 		this.accommodation = accommodation;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
