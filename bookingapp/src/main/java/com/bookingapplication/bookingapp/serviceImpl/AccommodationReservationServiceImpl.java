@@ -29,12 +29,12 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 	
 	@Override
 	public Collection<ReservationWithAccommodationDTO> findAll() {
-		return toAccommodationReservationDtos(accommodationReservationRepositoryJpa.findAll());
+		return toReservationWithAccommodationDtos(accommodationReservationRepositoryJpa.findAll());
 	}
 
 	@Override
 	public Collection<ReservationWithAccommodationDTO> findAll(String guestEmail) {
-		return toAccommodationReservationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getGuestEmail().equals(guestEmail)).collect(Collectors.toList()));
+		return toReservationWithAccommodationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getGuestEmail().equals(guestEmail)).collect(Collectors.toList()));
 	}
 
 	@Override
