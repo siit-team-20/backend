@@ -10,12 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.bookingapplication.bookingapp.domain.AccommodationRequest;
+import com.bookingapplication.bookingapp.domain.AccommodationReservation;
 import com.bookingapplication.bookingapp.domain.FavouriteAccommodation;
 import com.bookingapplication.bookingapp.domain.Report;
+import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationDTO;
+import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationWithAccommodationDTO;
+import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.exceptions.AppException;
 import com.bookingapplication.bookingapp.repositoryImpl.InMemoryFavouriteAccommodationRepository;
 import com.bookingapplication.bookingapp.repositoryjpa.FavouriteAccommodationRepositoryJpa;
+import com.bookingapplication.bookingapp.service.AccommodationService;
 import com.bookingapplication.bookingapp.service.FavouriteAccommodationService;
 
 @Service
@@ -23,10 +28,17 @@ public class FavouriteAccommodationServiceImpl implements FavouriteAccommodation
 
 	@Autowired
 	private FavouriteAccommodationRepositoryJpa favouriteAccommodationRepositoryJpa;
+	@Autowired
+	private AccommodationService accommodationService;
 
 	@Override
-	public Collection<FavouriteAccommodationDTO> findAll() {
-		return toFavouriteAccommodationDTOs(favouriteAccommodationRepositoryJpa.findAll());
+	public Collection<FavouriteAccommodationWithAccommodationDTO> findAll() {
+		return toFavouriteAccommodationWithAccommodationDtos(favouriteAccommodationRepositoryJpa.findAll());
+	}
+
+	@Override
+	public Collection<FavouriteAccommodationWithAccommodationDTO> findAll(String guestEmail) {
+		return toFavouriteAccommodationWithAccommodationDtos(favouriteAccommodationRepositoryJpa.findAll().stream().filter(a -> a.getGuestEmail().equals(guestEmail)).collect(Collectors.toList()));
 	}
 
 	@Override
@@ -73,7 +85,7 @@ public class FavouriteAccommodationServiceImpl implements FavouriteAccommodation
         FavouriteAccommodation favouriteAccommodation = new FavouriteAccommodation();
 
         favouriteAccommodation.setId( favouriteAccommodationDTO.getId() );
-        favouriteAccommodation.setGuestid(favouriteAccommodationDTO.getGuestid());
+        favouriteAccommodation.setGuestEmail(favouriteAccommodationDTO.getGuestEmail());
         favouriteAccommodation.setAccommodationId(favouriteAccommodationDTO.getAccommodationId());
         
         
@@ -89,7 +101,7 @@ public class FavouriteAccommodationServiceImpl implements FavouriteAccommodation
         FavouriteAccommodationDTO favouriteAccommodationDTO = new FavouriteAccommodationDTO();
 
         favouriteAccommodationDTO.setId( favouriteAccommodation.getId() );
-        favouriteAccommodationDTO.setGuestid(favouriteAccommodation.getGuestid());
+        favouriteAccommodationDTO.setGuestEmail(favouriteAccommodation.getGuestEmail());
         favouriteAccommodationDTO.setAccommodationId(favouriteAccommodation.getAccommodationId());
 
         return favouriteAccommodationDTO;
@@ -117,8 +129,65 @@ public class FavouriteAccommodationServiceImpl implements FavouriteAccommodation
 
         target.setId( source.getId() );
         target.setAccommodationId( source.getAccommodationId() );
-        target.setGuestid(source.getGuestid());
+        target.setGuestEmail(source.getGuestEmail());
     }
+    
+    // ----------------------
+
+	@Override
+	public FavouriteAccommodation toFavouriteAccommodation(
+			FavouriteAccommodationWithAccommodationDTO favouriteAccommodationWithAccommodationDTO) {
+		if ( favouriteAccommodationWithAccommodationDTO == null ) {
+            return null;
+        }
+
+        FavouriteAccommodation favouriteAccommodation = new FavouriteAccommodation();
+
+        favouriteAccommodation.setId( favouriteAccommodationWithAccommodationDTO.getId() );
+        favouriteAccommodation.setGuestEmail( favouriteAccommodationWithAccommodationDTO.getGuestEmail() );
+
+        Long accommodationId = null;
+        if (favouriteAccommodationWithAccommodationDTO.getAccommodation() != null)
+        	accommodationId = favouriteAccommodationWithAccommodationDTO.getAccommodation().getId();
+        favouriteAccommodation.setAccommodationId( accommodationId );
+        
+        return favouriteAccommodation;
+	}
+
+	@Override
+	public FavouriteAccommodationWithAccommodationDTO toFavouriteAccommodationWithAccommodationDTO(
+			FavouriteAccommodation favouriteAccommodation) {
+		if ( favouriteAccommodation == null ) {
+            return null;
+        }
+
+		FavouriteAccommodationWithAccommodationDTO favouriteAccommodationWithAccommodationDTO = new FavouriteAccommodationWithAccommodationDTO();
+
+		favouriteAccommodationWithAccommodationDTO.setId( favouriteAccommodation.getId() );
+		favouriteAccommodationWithAccommodationDTO.setGuestEmail( favouriteAccommodation.getGuestEmail() );
+
+        AccommodationDTO accommodation = null;
+        if (favouriteAccommodation.getAccommodationId() != null)
+        	accommodation = accommodationService.findOne(favouriteAccommodation.getAccommodationId());
+        favouriteAccommodationWithAccommodationDTO.setAccommodation( accommodation );
+        
+        return favouriteAccommodationWithAccommodationDTO;
+	}
+
+	@Override
+	public List<FavouriteAccommodationWithAccommodationDTO> toFavouriteAccommodationWithAccommodationDtos(
+			List<FavouriteAccommodation> favouriteAccommodations) {
+		if ( favouriteAccommodations == null ) {
+            return null;
+        }
+
+        List<FavouriteAccommodationWithAccommodationDTO> list = new ArrayList<FavouriteAccommodationWithAccommodationDTO>( favouriteAccommodations.size() );
+        for ( FavouriteAccommodation favouriteAccommodation1 : favouriteAccommodations ) {
+            list.add( toFavouriteAccommodationWithAccommodationDTO( favouriteAccommodation1 ) );
+        }
+
+        return list;
+	}
 
 }
 
