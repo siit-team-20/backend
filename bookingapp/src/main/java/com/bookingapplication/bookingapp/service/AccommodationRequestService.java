@@ -23,6 +23,8 @@ public interface AccommodationRequestService {
 	AccommodationRequestDTO update(AccommodationRequestDTO accommodationRequest, Long id) throws Exception;
 
 	void delete(Long id);
+	
+	void deleteByAccommodationId(Long accommodationId);
 
 	AccommodationRequest toAccommodationRequest(AccommodationRequestDTO accommodationRequestDTO);
 

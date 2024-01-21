@@ -1,36 +1,23 @@
-package com.bookingapplication.bookingapp.domain;
+package com.bookingapplication.bookingapp.dtos;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.bookingapplication.bookingapp.domain.NotificationType;
 
-@Entity
-@Table
-public class Notification {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+public class NotificationDTO {
+
 	private Long id;
-	@Column
 	private NotificationType type;
-	@Column
 	private String userEmail;
-	@Column
 	private String otherUserEmail;
-	@Column
 	private LocalDateTime createdAt;
 	
-	public Notification() {
+	public NotificationDTO() {
 		
 	}
 	
-	public Notification(Long id, NotificationType type, String userEmail, String otherUserEmail, LocalDateTime createdAt) {
+	public NotificationDTO(Long id, NotificationType type, String userEmail, String otherUserEmail, LocalDateTime createdAt) {
 		this.id = id;
 		this.type = type;
 		this.userEmail = userEmail;
@@ -78,7 +65,7 @@ public class Notification {
         this.createdAt = createdAt;
     }
     
-    public void copyValues(Notification notification) {
+    public void copyValues(NotificationDTO notification) {
 		this.type = notification.getType();
 		this.userEmail = notification.getUserEmail();
 		this.otherUserEmail = notification.getOtherUserEmail();
