@@ -75,6 +75,11 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 	}
 	
 	@Override
+	public Collection<ReservationWithAccommodationDTO> findAll(Long accommodationId, ReservationStatus status) {
+		return toReservationWithAccommodationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getAccommodationId().equals(accommodationId) && a.getStatus().equals(status)).collect(Collectors.toList()));
+	}
+	
+	@Override
 	public Collection<ReservationWithAccommodationDTO> findAll(Long accommodationId) {
 		return toReservationWithAccommodationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getAccommodationId().equals(accommodationId) && (a.getStatus().equals(ReservationStatus.Waiting) || a.getStatus().equals(ReservationStatus.Approved))).collect(Collectors.toList()));
 	}
@@ -86,6 +91,19 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 		for (AccommodationReservation accommodationReservation : accommodationReservations) {
 			AccommodationDTO accommodation = accommodationService.findOne(accommodationReservation.getAccommodationId());
 			if (accommodation.getOwnerEmail().equals(ownerEmail)) {
+				ownersAccommodationReservations.add(accommodationReservation);
+			}
+		}
+		return toReservationWithAccommodationDtos(ownersAccommodationReservations);
+	}
+	
+	@Override
+	public Collection<ReservationWithAccommodationDTO> findAllByOwnerEmailAndStatus(String ownerEmail, ReservationStatus status) {
+		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
+		List<AccommodationReservation> ownersAccommodationReservations = new ArrayList<AccommodationReservation>();
+		for (AccommodationReservation accommodationReservation : accommodationReservations) {
+			AccommodationDTO accommodation = accommodationService.findOne(accommodationReservation.getAccommodationId());
+			if (accommodation.getOwnerEmail().equals(ownerEmail) && accommodationReservation.getStatus().equals(status)) {
 				ownersAccommodationReservations.add(accommodationReservation);
 			}
 		}
@@ -120,10 +138,43 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 
         return toAccommodationReservationDTO(savedAccommodationreReservation);
 	}
+	
+	@Override
+	public AccommodationReservationDTO update(ReservationWithAccommodationDTO accommodationReservationDTO, Long id) throws Exception {
+		AccommodationReservation accommodationReservation = accommodationReservationRepositoryJpa.findById(id)
+                .orElseThrow(() -> new AppException("Accommodation not found", HttpStatus.NOT_FOUND));
+
+		updateAccommodationReservation(accommodationReservation, toAccommodationReservation(accommodationReservationDTO));
+
+        AccommodationReservation savedAccommodationreReservation = accommodationReservationRepositoryJpa.save(accommodationReservation);
+
+        return toAccommodationReservationDTO(savedAccommodationreReservation);
+	}
 
 	@Override
 	public void delete(Long id) {
 		accommodationReservationRepositoryJpa.deleteById(id);
+	}
+	
+	@Override
+	public void deleteAll(String guestEmail, ReservationStatus status) {
+		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
+		for (AccommodationReservation accommodationReservation : accommodationReservations) {
+			if (accommodationReservation.getGuestEmail().equals(guestEmail) && accommodationReservation.getStatus() .equals(status)) {
+				accommodationReservationRepositoryJpa.deleteById(accommodationReservation.getId());
+			}
+		}
+	}
+	
+	@Override
+	public void deleteAllByOwnerEmail(String ownerEmail, ReservationStatus status) {
+		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
+		for (AccommodationReservation accommodationReservation : accommodationReservations) {
+			AccommodationDTO accommodation = accommodationService.findOne(accommodationReservation.getAccommodationId());
+			if (accommodation.getOwnerEmail().equals(ownerEmail) && accommodationReservation.getStatus().equals(status)) {
+				accommodationReservationRepositoryJpa.deleteById(accommodationReservation.getId());
+			}
+		}
 	}
 	
 	public void updateStatuses() {

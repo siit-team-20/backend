@@ -12,6 +12,7 @@ import com.bookingapplication.bookingapp.dtos.AccommodationRequestDTO;
 import com.bookingapplication.bookingapp.dtos.AccommodationRequestType;
 import com.bookingapplication.bookingapp.exceptions.AppException;
 import com.bookingapplication.bookingapp.domain.AccommodationRequest;
+import com.bookingapplication.bookingapp.domain.AccommodationReservation;
 import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.repositoryjpa.AccommodationRequestRepositoryJpa;
 import com.bookingapplication.bookingapp.service.AccommodationRequestService;
@@ -85,6 +86,16 @@ public class AccommodationRequestServiceImpl implements AccommodationRequestServ
 	@Override
 	public void delete(Long id) {
 		accommodationRequestRepositoryJpa.deleteById(id);
+	}
+	
+	@Override
+	public void deleteByAccommodationId(Long accommodationId) {
+		List<AccommodationRequest> accommodationRequests = accommodationRequestRepositoryJpa.findAll();
+		for (AccommodationRequest accommodationRequest : accommodationRequests) {
+			if (accommodationRequest.getNewAccommodationId().equals(accommodationId) || accommodationRequest.getOldAccommodationId().equals(accommodationId)) {
+				accommodationRequestRepositoryJpa.deleteById(accommodationRequest.getId());
+			}
+		}
 	}
 	
 	@Override
