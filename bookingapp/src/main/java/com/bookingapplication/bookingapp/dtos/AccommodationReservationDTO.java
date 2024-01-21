@@ -3,7 +3,6 @@ package com.bookingapplication.bookingapp.dtos;
 import java.time.LocalDate;
 import java.util.Date;
 
-import com.bookingapplication.bookingapp.domain.AccommodationReservation;
 import com.bookingapplication.bookingapp.domain.ReservationStatus;
 
 public class AccommodationReservationDTO {

@@ -3,6 +3,7 @@ package com.bookingapplication.bookingapp.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.hibernate.boot.model.internal.Nullability;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.bookingapplication.bookingapp.domain.ReservationStatus;
 import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
 import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.service.AccommodationReservationService;
@@ -34,11 +37,19 @@ public class AccommodationReservationController {
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<ReservationWithAccommodationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail) {
+	public ResponseEntity<Collection<ReservationWithAccommodationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail, @RequestParam(required = false) String ownerEmail, @RequestParam(required = false) ReservationStatus status, @RequestParam(required = false) Long days) {
 		updateReservations();
 		Collection<ReservationWithAccommodationDTO> accommodationReservations = new ArrayList<ReservationWithAccommodationDTO>();
-		if (guestEmail != null)
+		if (ownerEmail != null && status != null && guestEmail != null)
+			accommodationReservations = accommodationReservationService.findAll(ownerEmail, guestEmail, status);
+		else if (guestEmail != null && status != null && days != null)
+			accommodationReservations = accommodationReservationService.findAll(guestEmail, status, days);
+		else if (guestEmail != null && status != null)
+			accommodationReservations = accommodationReservationService.findAll(guestEmail, status);
+		else if (guestEmail != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail);
+		else if (ownerEmail != null)
+			accommodationReservations = accommodationReservationService.findAllByOwnerEmail(ownerEmail);
 		else
 			accommodationReservations = accommodationReservationService.findAll();
 		return new ResponseEntity<Collection<ReservationWithAccommodationDTO>>(accommodationReservations, HttpStatus.OK);

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.hibernate.property.access.spi.BuiltInPropertyAccessStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,52 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 	@Override
 	public Collection<ReservationWithAccommodationDTO> findAll(String guestEmail) {
 		return toReservationWithAccommodationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getGuestEmail().equals(guestEmail)).collect(Collectors.toList()));
+	}
+	
+	@Override
+	public Collection<ReservationWithAccommodationDTO> findAll(String ownerEmail, String guestEmail, ReservationStatus status) {
+		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
+		List<AccommodationReservation> ownersAccommodationReservations = new ArrayList<AccommodationReservation>();
+		for (AccommodationReservation accommodationReservation : accommodationReservations) {
+			AccommodationDTO accommodation = accommodationService.findOne(accommodationReservation.getAccommodationId());
+			if (accommodation.getOwnerEmail().equals(ownerEmail) && accommodationReservation.getStatus().equals(status) && accommodationReservation.getGuestEmail().equals(guestEmail)) {
+				ownersAccommodationReservations.add(accommodationReservation);
+			}
+		}
+		return toReservationWithAccommodationDtos(ownersAccommodationReservations);	
+	}
+	
+	@Override
+	public Collection<ReservationWithAccommodationDTO> findAll(String guestEmail, ReservationStatus status, Long days) {
+		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
+		List<AccommodationReservation> ownersAccommodationReservations = new ArrayList<AccommodationReservation>();
+		for (AccommodationReservation accommodationReservation : accommodationReservations) {
+			if (accommodationReservation.getStatus().equals(status) && accommodationReservation.getGuestEmail().equals(guestEmail)) {
+				LocalDate endDate = accommodationReservation.getDate();
+				endDate.plusDays(accommodationReservation.getDays());
+				if (endDate.plusDays(days).isAfter(LocalDate.now()))
+					ownersAccommodationReservations.add(accommodationReservation);
+			}
+		}
+		return toReservationWithAccommodationDtos(ownersAccommodationReservations);	
+	}
+	
+	@Override
+	public Collection<ReservationWithAccommodationDTO> findAll(String guestEmail, ReservationStatus status) {
+		return toReservationWithAccommodationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getGuestEmail().equals(guestEmail) && a.getStatus().equals(status)).collect(Collectors.toList()));
+	}
+	
+	@Override
+	public Collection<ReservationWithAccommodationDTO> findAllByOwnerEmail(String ownerEmail) {
+		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
+		List<AccommodationReservation> ownersAccommodationReservations = new ArrayList<AccommodationReservation>();
+		for (AccommodationReservation accommodationReservation : accommodationReservations) {
+			AccommodationDTO accommodation = accommodationService.findOne(accommodationReservation.getAccommodationId());
+			if (accommodation.getOwnerEmail().equals(ownerEmail)) {
+				ownersAccommodationReservations.add(accommodationReservation);
+			}
+		}
+		return toReservationWithAccommodationDtos(ownersAccommodationReservations);
 	}
 
 	@Override
