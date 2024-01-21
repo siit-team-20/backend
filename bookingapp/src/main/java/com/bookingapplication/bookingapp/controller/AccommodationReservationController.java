@@ -42,10 +42,14 @@ public class AccommodationReservationController {
 		Collection<ReservationWithAccommodationDTO> accommodationReservations = new ArrayList<ReservationWithAccommodationDTO>();
 		if (ownerEmail != null && status != null && guestEmail != null)
 			accommodationReservations = accommodationReservationService.findAll(ownerEmail, guestEmail, status);
-		else if (guestEmail != null && status != null && days != null)
+		else if (ownerEmail != null && status != null)
+			accommodationReservations = accommodationReservationService.findAllByOwnerEmailAndStatus(ownerEmail, status);
+		else if (guestEmail != null && status != null && days != null && accommodationId != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail, status, days, accommodationId);
 		else if (guestEmail != null && status != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail, status);
+		else if (status != null && accommodationId != null)
+			accommodationReservations = accommodationReservationService.findAll(accommodationId, status);
 		else if (accommodationId != null)
 			accommodationReservations = accommodationReservationService.findAll(accommodationId);
 		else if (guestEmail != null)
@@ -97,6 +101,16 @@ public class AccommodationReservationController {
 	public ResponseEntity<AccommodationReservationDTO> deleteAccommodationReservation(@PathVariable("id") Long id) {
 		updateReservations();
 		accommodationReservationService.delete(id);
+		return new ResponseEntity<AccommodationReservationDTO>(HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<AccommodationReservationDTO> deleteAccommodationReservation(@RequestParam(required = false) String guestEmail, @RequestParam(required = false) ReservationStatus status, @RequestParam(required = false) String ownerEmail) {
+		updateReservations();
+		if (guestEmail != null && status != null)
+			accommodationReservationService.deleteAll(guestEmail, status);
+		else if (ownerEmail != null && status != null)
+			accommodationReservationService.deleteAllByOwnerEmail(ownerEmail, status);
 		return new ResponseEntity<AccommodationReservationDTO>(HttpStatus.NO_CONTENT);
 	}
 

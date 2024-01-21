@@ -42,7 +42,7 @@ public class ReportDTO {
 	public void setReportedEmail(String reportedEmail) {
 		this.reportedEmail = reportedEmail;
 	}
-	}
+	
 	public void copyValues(ReportDTO report) {
 		this.reportedEmail = report.getReportedEmail();
 		this.reporterEmail = report.getReporterEmail();

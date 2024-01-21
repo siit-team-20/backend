@@ -2,6 +2,7 @@ package com.bookingapplication.bookingapp.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -122,6 +123,16 @@ public class AccommodationController {
 	public ResponseEntity<AccommodationDTO> deleteAccommodation(@PathVariable("id") Long id) {
 		accommodationService.delete(id);
 		dateRangeService.deleteByAccommodationId(id);
+		return new ResponseEntity<AccommodationDTO>(HttpStatus.NO_CONTENT);
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<AccommodationDTO> deleteAccommodation(@RequestParam(required = false) String ownerEmail) {
+		Collection<AccommodationDTO> accommodationDTOs = accommodationService.findAll(ownerEmail);
+		for (AccommodationDTO accommodationDTO : accommodationDTOs) {
+			accommodationService.delete(accommodationDTO.getId());
+			dateRangeService.deleteByAccommodationId(accommodationDTO.getId());
+		}
 		return new ResponseEntity<AccommodationDTO>(HttpStatus.NO_CONTENT);
 	}
 
