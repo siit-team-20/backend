@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.domain.ReservationStatus;
 import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
+import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.service.AccommodationReservationService;
 
@@ -95,6 +96,25 @@ public class AccommodationReservationController {
 		}
 		
 		return new ResponseEntity<AccommodationReservationDTO>(updatedAccommodationReservation, HttpStatus.OK);
+	}
+	
+	@PutMapping
+	public ResponseEntity<AccommodationReservationDTO> updateAccommodationReservation(@RequestParam(required = false) Long oldAccommodationId, @RequestParam(required = false) Long newAccommodationId) {
+		updateReservations();
+		if (oldAccommodationId != null && newAccommodationId != null) {
+			Collection<ReservationWithAccommodationDTO> accommodationReservationDTOs = accommodationReservationService.findAll();
+			for (ReservationWithAccommodationDTO reservationWithAccommodationDTO : accommodationReservationDTOs) {
+				if (reservationWithAccommodationDTO.getAccommodation().getId().equals(oldAccommodationId)) {
+					AccommodationReservationDTO reservation = accommodationReservationService.findOne(reservationWithAccommodationDTO.getId());
+					reservation.setAccommodationId(newAccommodationId);
+					try {
+						accommodationReservationService.update(reservation, reservation.getId());
+					} catch (Exception e) {
+					}
+				}
+			}
+		}
+		return new ResponseEntity<AccommodationReservationDTO>(HttpStatus.NO_CONTENT);
 	}
 	
 	@DeleteMapping(value = "/{id}")

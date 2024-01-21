@@ -138,6 +138,18 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 
         return toAccommodationReservationDTO(savedAccommodationreReservation);
 	}
+	
+	@Override
+	public AccommodationReservationDTO update(ReservationWithAccommodationDTO accommodationReservationDTO, Long id) throws Exception {
+		AccommodationReservation accommodationReservation = accommodationReservationRepositoryJpa.findById(id)
+                .orElseThrow(() -> new AppException("Accommodation not found", HttpStatus.NOT_FOUND));
+
+		updateAccommodationReservation(accommodationReservation, toAccommodationReservation(accommodationReservationDTO));
+
+        AccommodationReservation savedAccommodationreReservation = accommodationReservationRepositoryJpa.save(accommodationReservation);
+
+        return toAccommodationReservationDTO(savedAccommodationreReservation);
+	}
 
 	@Override
 	public void delete(Long id) {

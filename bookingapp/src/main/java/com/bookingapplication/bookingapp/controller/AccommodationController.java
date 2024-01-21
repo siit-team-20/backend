@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.DateRangeDTO;
+import com.bookingapplication.bookingapp.service.AccommodationRequestService;
 import com.bookingapplication.bookingapp.service.AccommodationService;
 import com.bookingapplication.bookingapp.service.DateRangeService;
 
@@ -32,6 +33,8 @@ public class AccommodationController {
 	
 	@Autowired
 	private AccommodationService accommodationService;
+	@Autowired
+	private AccommodationRequestService accommodationRequestService;
 	@Autowired
 	private DateRangeService dateRangeService;
 
@@ -130,6 +133,7 @@ public class AccommodationController {
 	public ResponseEntity<AccommodationDTO> deleteAccommodation(@RequestParam(required = false) String ownerEmail) {
 		Collection<AccommodationDTO> accommodationDTOs = accommodationService.findAll(ownerEmail);
 		for (AccommodationDTO accommodationDTO : accommodationDTOs) {
+			accommodationRequestService.deleteByAccommodationId(accommodationDTO.getId());
 			accommodationService.delete(accommodationDTO.getId());
 			dateRangeService.deleteByAccommodationId(accommodationDTO.getId());
 		}

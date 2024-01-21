@@ -22,6 +22,7 @@ public interface AccommodationReservationService {
 	AccommodationReservationDTO findOne(Long id);
 	AccommodationReservationDTO create(AccommodationReservationDTO reservationRequest) throws Exception;
 	AccommodationReservationDTO update(AccommodationReservationDTO reservationRequest, Long id) throws Exception;
+	AccommodationReservationDTO update(ReservationWithAccommodationDTO reservationRequest, Long id) throws Exception;
 	void delete(Long id);
 	void deleteAll(String guestEmail, ReservationStatus status);
 	void deleteAllByOwnerEmail(String ownerEmail, ReservationStatus status);
