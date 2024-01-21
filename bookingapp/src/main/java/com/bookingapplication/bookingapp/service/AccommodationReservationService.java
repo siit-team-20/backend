@@ -12,6 +12,7 @@ public interface AccommodationReservationService {
 
 	Collection<ReservationWithAccommodationDTO> findAll();
 	Collection<ReservationWithAccommodationDTO> findAll(String guestEmail);
+	Collection<ReservationWithAccommodationDTO> findAll(Long accommodationId);
 	Collection<ReservationWithAccommodationDTO> findAll(String guestEmail, ReservationStatus status);
 	Collection<ReservationWithAccommodationDTO> findAll(String guestEmail, ReservationStatus status, Long days, Long accommodationId);
 	Collection<ReservationWithAccommodationDTO> findAllByOwnerEmail(String ownerEmail);

@@ -46,6 +46,8 @@ public class AccommodationReservationController {
 			accommodationReservations = accommodationReservationService.findAll(guestEmail, status, days, accommodationId);
 		else if (guestEmail != null && status != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail, status);
+		else if (accommodationId != null)
+			accommodationReservations = accommodationReservationService.findAll(accommodationId);
 		else if (guestEmail != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail);
 		else if (ownerEmail != null)

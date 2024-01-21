@@ -75,6 +75,11 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 	}
 	
 	@Override
+	public Collection<ReservationWithAccommodationDTO> findAll(Long accommodationId) {
+		return toReservationWithAccommodationDtos(accommodationReservationRepositoryJpa.findAll().stream().filter(a -> a.getAccommodationId().equals(accommodationId) && (a.getStatus().equals(ReservationStatus.Waiting) || a.getStatus().equals(ReservationStatus.Approved))).collect(Collectors.toList()));
+	}
+	
+	@Override
 	public Collection<ReservationWithAccommodationDTO> findAllByOwnerEmail(String ownerEmail) {
 		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
 		List<AccommodationReservation> ownersAccommodationReservations = new ArrayList<AccommodationReservation>();
@@ -125,9 +130,13 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
 		for (AccommodationReservation accommodationReservation : accommodationReservations) {
 			LocalDate endDate = accommodationReservation.getDate();
-			endDate.plusDays(accommodationReservation.getDays());
+			endDate = endDate.plusDays(accommodationReservation.getDays());
 			if (accommodationReservation.getStatus() == ReservationStatus.Approved && endDate.isBefore(LocalDate.now())) {
 				accommodationReservation.setStatus(ReservationStatus.Finished);
+		        accommodationReservationRepositoryJpa.save(accommodationReservation);
+			}
+			if (accommodationReservation.getStatus() == ReservationStatus.Waiting && accommodationReservation.getDate().isBefore(LocalDate.now())) {
+				accommodationReservation.setStatus(ReservationStatus.Rejected);
 		        accommodationReservationRepositoryJpa.save(accommodationReservation);
 			}
 		}
