@@ -74,8 +74,6 @@ public class ReportServiceImpl implements ReportService {
         report.setId( reportDTO.getId() );
         report.setReporterEmail(reportDTO.getReporterEmail());
         report.setReportedEmail(reportDTO.getReportedEmail());
-        report.setAccommodationId(reportDTO.getAccommodationId());
-        
         
         return report;
     }
@@ -91,7 +89,6 @@ public class ReportServiceImpl implements ReportService {
         reportDTO.setId( report.getId() );
         reportDTO.setReportedEmail(report.getReportedEmail());
         reportDTO.setReporterEmail(report.getReporterEmail());
-        reportDTO.setAccommodationId(report.getAccommodationId());
 
         return reportDTO;
     }
@@ -117,7 +114,6 @@ public class ReportServiceImpl implements ReportService {
         }
 
         target.setId( source.getId() );
-        target.setAccommodationId( source.getAccommodationId() );
         target.setReportedEmail(source.getReportedEmail());
         target.setReporterEmail(source.getReporterEmail());
     }
