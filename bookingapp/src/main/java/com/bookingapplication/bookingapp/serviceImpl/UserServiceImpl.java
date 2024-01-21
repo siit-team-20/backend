@@ -35,6 +35,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.password()), user.getPassword())) {
+        	if (user.getIsBlocked() == true) 
+                throw new AppException("User is blocked", HttpStatus.BAD_REQUEST);
             return toUserDTO(user);
         }
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);

@@ -77,6 +77,11 @@ public class FavouriteAccommodationServiceImpl implements FavouriteAccommodation
 	}
 	
 	@Override
+	public void deleteByAccommodationId(Long id) {
+		favouriteAccommodationRepositoryJpa.deleteByAccommodationId(id);
+	}
+	
+	@Override
     public FavouriteAccommodation toFavouriteAccommodation(FavouriteAccommodationDTO favouriteAccommodationDTO) {
 		if ( favouriteAccommodationDTO == null ) {
             return null;

@@ -160,7 +160,7 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 	public void deleteAll(String guestEmail, ReservationStatus status) {
 		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
 		for (AccommodationReservation accommodationReservation : accommodationReservations) {
-			if (accommodationReservation.getGuestEmail().equals(guestEmail) && accommodationReservation.getStatus() .equals(status)) {
+			if (accommodationReservation.getGuestEmail().equals(guestEmail)) {
 				accommodationReservationRepositoryJpa.deleteById(accommodationReservation.getId());
 			}
 		}
@@ -171,7 +171,7 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
 		for (AccommodationReservation accommodationReservation : accommodationReservations) {
 			AccommodationDTO accommodation = accommodationService.findOne(accommodationReservation.getAccommodationId());
-			if (accommodation.getOwnerEmail().equals(ownerEmail) && accommodationReservation.getStatus().equals(status)) {
+			if (accommodation.getOwnerEmail().equals(ownerEmail)) {
 				accommodationReservationRepositoryJpa.deleteById(accommodationReservation.getId());
 			}
 		}

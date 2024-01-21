@@ -3,11 +3,9 @@ package com.bookingapplication.bookingapp.service;
 import java.util.Collection;
 import java.util.List;
 
-import com.bookingapplication.bookingapp.domain.AccommodationReservation;
 import com.bookingapplication.bookingapp.domain.FavouriteAccommodation;
 import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.FavouriteAccommodationWithAccommodationDTO;
-import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 
 public interface FavouriteAccommodationService {
 	
@@ -21,6 +19,8 @@ public interface FavouriteAccommodationService {
 	FavouriteAccommodationDTO update(FavouriteAccommodationDTO favouriteAccommodation, Long id) throws Exception;
 
 	void delete(Long id);
+	
+	void deleteByAccommodationId(Long id);
 	
 	FavouriteAccommodation toFavouriteAccommodation(FavouriteAccommodationDTO favouriteAccommodationDTO);
 

@@ -25,6 +25,7 @@ import com.bookingapplication.bookingapp.dtos.DateRangeDTO;
 import com.bookingapplication.bookingapp.service.AccommodationRequestService;
 import com.bookingapplication.bookingapp.service.AccommodationService;
 import com.bookingapplication.bookingapp.service.DateRangeService;
+import com.bookingapplication.bookingapp.service.FavouriteAccommodationService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -37,6 +38,8 @@ public class AccommodationController {
 	private AccommodationRequestService accommodationRequestService;
 	@Autowired
 	private DateRangeService dateRangeService;
+	@Autowired
+	private FavouriteAccommodationService favouriteAccommodationService;
 
 	/*
 	 * Prilikom poziva metoda potrebno je navesti nekoliko parametara
@@ -136,6 +139,7 @@ public class AccommodationController {
 			accommodationRequestService.deleteByAccommodationId(accommodationDTO.getId());
 			accommodationService.delete(accommodationDTO.getId());
 			dateRangeService.deleteByAccommodationId(accommodationDTO.getId());
+			favouriteAccommodationService.deleteByAccommodationId(accommodationDTO.getId());
 		}
 		return new ResponseEntity<AccommodationDTO>(HttpStatus.NO_CONTENT);
 	}
