@@ -18,18 +18,15 @@ public class Report {
 	private String reporterEmail;
 	@Column
 	private String reportedEmail;
-	@Column
-	private Long accommodationId;
 	
 	public Report() {
 		
 	}
 	
-	public Report(Long id, String reporterEmail, String reportedEmail, Long accommodationId) {
+	public Report(Long id, String reporterEmail, String reportedEmail) {
 		this.id = id;
 		this.reporterEmail = reporterEmail;
 		this.reportedEmail = reportedEmail;
-		this.accommodationId = accommodationId;
 	}
 	
 	public Long getId() {
@@ -56,18 +53,9 @@ public class Report {
         this.reportedEmail = reportedEmail;
     }
     
-    public Long getAccommodationId() {
-        return accommodationId;
-    }
-
-    public void setAccommodationId(Long accommodationId) {
-        this.accommodationId = accommodationId;
-    }
-    
     public void copyValues(Report report) {
 		this.reporterEmail = report.getReporterEmail();
 		this.reportedEmail = report.getReportedEmail();
-		this.accommodationId = report.getAccommodationId();
     }
 	
 }
