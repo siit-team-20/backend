@@ -13,7 +13,7 @@ public interface AccommodationReservationService {
 	Collection<ReservationWithAccommodationDTO> findAll();
 	Collection<ReservationWithAccommodationDTO> findAll(String guestEmail);
 	Collection<ReservationWithAccommodationDTO> findAll(String guestEmail, ReservationStatus status);
-	Collection<ReservationWithAccommodationDTO> findAll(String guestEmail, ReservationStatus status, Long days);
+	Collection<ReservationWithAccommodationDTO> findAll(String guestEmail, ReservationStatus status, Long days, Long accommodationId);
 	Collection<ReservationWithAccommodationDTO> findAllByOwnerEmail(String ownerEmail);
 	Collection<ReservationWithAccommodationDTO> findAll(String ownerEmail, String guestEmail, ReservationStatus status);
 	AccommodationReservationDTO findOne(Long id);

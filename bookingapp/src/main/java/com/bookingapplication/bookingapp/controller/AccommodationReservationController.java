@@ -37,13 +37,13 @@ public class AccommodationReservationController {
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<ReservationWithAccommodationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail, @RequestParam(required = false) String ownerEmail, @RequestParam(required = false) ReservationStatus status, @RequestParam(required = false) Long days) {
+	public ResponseEntity<Collection<ReservationWithAccommodationDTO>> getAccommodationReservations(@RequestParam(required = false) String guestEmail, @RequestParam(required = false) String ownerEmail, @RequestParam(required = false) ReservationStatus status, @RequestParam(required = false) Long days, @RequestParam(required = false) Long accommodationId) {
 		updateReservations();
 		Collection<ReservationWithAccommodationDTO> accommodationReservations = new ArrayList<ReservationWithAccommodationDTO>();
 		if (ownerEmail != null && status != null && guestEmail != null)
 			accommodationReservations = accommodationReservationService.findAll(ownerEmail, guestEmail, status);
 		else if (guestEmail != null && status != null && days != null)
-			accommodationReservations = accommodationReservationService.findAll(guestEmail, status, days);
+			accommodationReservations = accommodationReservationService.findAll(guestEmail, status, days, accommodationId);
 		else if (guestEmail != null && status != null)
 			accommodationReservations = accommodationReservationService.findAll(guestEmail, status);
 		else if (guestEmail != null)
