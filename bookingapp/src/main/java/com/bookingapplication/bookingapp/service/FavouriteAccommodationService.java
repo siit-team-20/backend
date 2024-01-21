@@ -16,7 +16,7 @@ public interface FavouriteAccommodationService {
 
 	FavouriteAccommodationDTO findOne(Long id);
 
-	FavouriteAccommodationDTO create(FavouriteAccommodationDTO favouriteAccommodation) throws Exception;
+	FavouriteAccommodationDTO create(FavouriteAccommodationWithAccommodationDTO favouriteAccommodation) throws Exception;
 
 	FavouriteAccommodationDTO update(FavouriteAccommodationDTO favouriteAccommodation, Long id) throws Exception;
 

@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 		User user = userRepositoryJpa.findByEmail(email)
                 .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 		
-		User updatedUser = new User(signUpDTO.email(), "", signUpDTO.name(), signUpDTO.surname(), signUpDTO.address(), signUpDTO.phone(), signUpDTO.type());
+		User updatedUser = new User(signUpDTO.email(), "", signUpDTO.name(), signUpDTO.surname(), signUpDTO.address(), signUpDTO.phone(), signUpDTO.type(), signUpDTO.isBlocked());
 
 		if (signUpDTO.password().length == 0) {
 			updatedUser.setPassword(user.getPassword());
@@ -105,6 +105,7 @@ public class UserServiceImpl implements UserService {
     	user.setSurname(userDTO.getSurname());
     	user.setType(userDTO.getType());
     	user.setAddress(userDTO.getAddress());
+    	user.setIsBlocked(userDTO.getIsBlocked());
 
         return user;
     }
@@ -124,8 +125,9 @@ public class UserServiceImpl implements UserService {
         UserType type = user.getType();
         String address = user.getAddress();
         String password = user.getPassword();
+        boolean isBlocked = user.getIsBlocked();
 
-        UserDTO userDTO = new UserDTO(email, password, name, surname, address, phone, type);
+        UserDTO userDTO = new UserDTO(email, password, name, surname, address, phone, type, isBlocked);
 
         return userDTO;
     }
@@ -157,6 +159,7 @@ public class UserServiceImpl implements UserService {
         target.setPhone( source.getPhone() );
         target.setSurname( source.getSurname() );
         target.setType( source.getType());
+        target.setIsBlocked( source.getIsBlocked());
     }
     
     @Override 
@@ -173,6 +176,7 @@ public class UserServiceImpl implements UserService {
     	user.setSurname(signUpDTO.surname());
     	user.setType(signUpDTO.type());
     	user.setAddress(signUpDTO.address());
+    	user.setIsBlocked(signUpDTO.isBlocked());
 
         return user;
     }

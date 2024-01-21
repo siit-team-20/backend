@@ -1,5 +1,7 @@
 package com.bookingapplication.bookingapp.dtos;
 
+import java.time.LocalDate;
+
 import com.bookingapplication.bookingapp.domain.Rating;
 
 public class OwnerReviewDTO {
@@ -10,12 +12,13 @@ public class OwnerReviewDTO {
 	private Rating rating;
     private String comment;
     private boolean isReported;
+	private LocalDate submitDate;
 
     public OwnerReviewDTO() {
 
     }
     
-    public OwnerReviewDTO(Long id, String ownerEmail, String guestEmail, Rating rating, String comment, boolean isReported) {
+    public OwnerReviewDTO(Long id, String ownerEmail, String guestEmail, Rating rating, String comment, boolean isReported, LocalDate submitDate) {
 		super();
 		this.id = id;
 		this.ownerEmail = ownerEmail;
@@ -23,6 +26,7 @@ public class OwnerReviewDTO {
 		this.rating = rating;
 		this.comment = comment;
 		this.isReported = isReported;
+		this.submitDate = submitDate;
 	}
 	
 	public Long getId() {
@@ -72,6 +76,14 @@ public class OwnerReviewDTO {
 	public void setIsReported(boolean isReported) {
 		this.isReported = isReported;
 	}
+	
+	public LocalDate getSubmitDate() {
+		return submitDate;
+	}
+	
+	public void setSubmitDate(LocalDate submitDate) {
+		this.submitDate = submitDate;
+	}
 
     public void copyValues(OwnerReviewDTO ownerReview) {
     		this.ownerEmail = ownerReview.getOwnerEmail();
@@ -79,6 +91,7 @@ public class OwnerReviewDTO {
     		this.rating = ownerReview.getRating();
     		this.comment = ownerReview.getComment();
     		this.isReported = ownerReview.getIsReported();
+    		this.submitDate = ownerReview.getSubmitDate();
     }
 
 }

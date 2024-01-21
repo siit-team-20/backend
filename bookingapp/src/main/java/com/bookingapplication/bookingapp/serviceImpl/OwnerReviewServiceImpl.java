@@ -92,6 +92,7 @@ public class OwnerReviewServiceImpl implements OwnerReviewService {
         ownerReview.setComment( ownerReviewDTO.getComment() );
         ownerReview.setRating( ownerReviewDTO.getRating() );
         ownerReview.setIsReported( ownerReviewDTO.getIsReported() );
+        ownerReview.setSubmitDate( ownerReviewDTO.getSubmitDate() );
         
         return ownerReview;
 	}
@@ -110,6 +111,7 @@ public class OwnerReviewServiceImpl implements OwnerReviewService {
 		ownerReviewDTO.setComment( ownerReview.getComment() );
 		ownerReviewDTO.setRating( ownerReview.getRating() );
 		ownerReviewDTO.setIsReported( ownerReview.getIsReported() );
+		ownerReviewDTO.setSubmitDate( ownerReview.getSubmitDate() );
         
         return ownerReviewDTO;
 	}
@@ -140,6 +142,7 @@ public class OwnerReviewServiceImpl implements OwnerReviewService {
 		target.setComment(source.getComment());
 		target.setRating(source.getRating());
 		target.setIsReported(source.getIsReported());
+		target.setSubmitDate(source.getSubmitDate());
 	}
 
 }

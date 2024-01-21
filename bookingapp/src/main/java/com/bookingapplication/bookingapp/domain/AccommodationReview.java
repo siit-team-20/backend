@@ -1,5 +1,7 @@
 package com.bookingapplication.bookingapp.domain;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,12 +26,14 @@ public class AccommodationReview {
 	private Rating rating;
     @Column
 	private boolean isApproved;
+	@Column
+	private LocalDate submitDate;
 	
 	public AccommodationReview() {
 
 	}
 
-	public AccommodationReview(Long id, String guestEmail, Long accommodationId, String comment, Rating rating, boolean isApproved) {
+	public AccommodationReview(Long id, String guestEmail, Long accommodationId, String comment, Rating rating, boolean isApproved, LocalDate submitDate) {
 		super();
 		this.id = id;
 		this.guestEmail = guestEmail;
@@ -37,6 +41,7 @@ public class AccommodationReview {
 		this.comment = comment;
 		this.rating = rating;
 		this.isApproved = isApproved;
+		this.submitDate = submitDate;
 	}
 	
 	public Long getId() {
@@ -81,12 +86,21 @@ public class AccommodationReview {
 		this.isApproved = isApproved;
 	}
 	
+	public LocalDate getSubmitDate() {
+		return submitDate;
+	}
+	
+	public void setSubmitDate(LocalDate submitDate) {
+		this.submitDate = submitDate;
+	}
+	
 	public void copyValues(AccommodationReview accommodationReview) {
 		this.guestEmail = accommodationReview.getGuestEmail();
 		this.accommodationId = accommodationReview.getAccommodationId();
 		this.comment = accommodationReview.getComment();
 		this.rating = accommodationReview.getRating();
 		this.isApproved = accommodationReview.getIsApproved();
+		this.submitDate = accommodationReview.getSubmitDate();
 	}
 
 }

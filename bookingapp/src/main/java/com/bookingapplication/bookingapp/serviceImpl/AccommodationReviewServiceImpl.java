@@ -91,6 +91,7 @@ public class AccommodationReviewServiceImpl implements AccommodationReviewServic
         accommodationReview.setComment( accommodationReviewDTO.getComment() );
         accommodationReview.setRating( accommodationReviewDTO.getRating() );
         accommodationReview.setIsApproved( accommodationReviewDTO.getIsApproved() );
+        accommodationReview.setSubmitDate( accommodationReviewDTO.getSubmitDate() );
         
         return accommodationReview;
 	}
@@ -109,6 +110,7 @@ public class AccommodationReviewServiceImpl implements AccommodationReviewServic
         accommodationReviewDTO.setComment( accommodationReview.getComment() );
         accommodationReviewDTO.setRating( accommodationReview.getRating() );
         accommodationReviewDTO.setIsApproved( accommodationReview.getIsApproved() );
+        accommodationReviewDTO.setSubmitDate( accommodationReview.getSubmitDate() );
         
         return accommodationReviewDTO;
 	}
@@ -140,6 +142,7 @@ public class AccommodationReviewServiceImpl implements AccommodationReviewServic
 		target.setComment(source.getComment());
 		target.setRating(source.getRating());
 		target.setIsApproved(source.getIsApproved());
+		target.setSubmitDate(source.getSubmitDate());
 	}
 
 }

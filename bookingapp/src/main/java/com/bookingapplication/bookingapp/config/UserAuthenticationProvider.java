@@ -51,6 +51,7 @@ public class UserAuthenticationProvider {
                 .withClaim("address", user.getAddress())
                 .withClaim("phone", user.getPhone())
                 .withClaim("type", user.getType().toString())
+                .withClaim("isBlocked", String.valueOf(user.getIsBlocked()))
                 .sign(algorithm);
     }
 
@@ -62,7 +63,7 @@ public class UserAuthenticationProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        UserDTO user = new UserDTO(decoded.getSubject(), null, decoded.getClaim("name").asString(), decoded.getClaim("surname").asString(), decoded.getClaim("address").asString(), decoded.getClaim("phone").asString(), UserType.valueOf(decoded.getClaim("type").asString()));
+        UserDTO user = new UserDTO(decoded.getSubject(), null, decoded.getClaim("name").asString(), decoded.getClaim("surname").asString(), decoded.getClaim("address").asString(), decoded.getClaim("phone").asString(), UserType.valueOf(decoded.getClaim("type").asString()), Boolean.valueOf(decoded.getClaim("isBlocked").asString()));
 
         return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }

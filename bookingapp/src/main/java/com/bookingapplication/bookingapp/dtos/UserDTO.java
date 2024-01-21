@@ -18,12 +18,13 @@ public class UserDTO {
     private String address;
     private String phone;
     private UserType type;
+    private boolean isBlocked;
 
     public UserDTO() {
 
     }
     
-    public UserDTO(String email, String token, String name, String surname, String address, String phone, UserType type) {
+    public UserDTO(String email, String token, String name, String surname, String address, String phone, UserType type, boolean isBlocked) {
     	this.email = email;
     	this.token = token;
     	this.name = name;
@@ -31,6 +32,7 @@ public class UserDTO {
     	this.address = address;
     	this.phone = phone;
     	this.type = type;
+    	this.isBlocked = isBlocked;
     }
     
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -95,6 +97,14 @@ public class UserDTO {
         this.phone = phone;
     }
     
+    public boolean getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+    
     public void copyValues(UserDTO user) {
 		this.email = user.getEmail();
 		this.name = user.getName();
@@ -102,6 +112,7 @@ public class UserDTO {
 		this.token = user.getToken();
 		this.phone = user.getPhone();
 		this.address = user.getAddress();
+		this.isBlocked = user.getIsBlocked();
     }
 
 }

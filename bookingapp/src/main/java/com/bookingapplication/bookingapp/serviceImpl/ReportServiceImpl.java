@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import com.bookingapplication.bookingapp.service.ReportService;
 @Service
 public class ReportServiceImpl implements ReportService {
 
+	@Autowired
 	private ReportRepositoryJpa reportRepositoryJpa;
 	
 	public ReportServiceImpl() {

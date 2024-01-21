@@ -52,7 +52,7 @@ public class FavouriteAccommodationController {
 
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<FavouriteAccommodationDTO> createFavouriteAccommodation(@RequestBody FavouriteAccommodationDTO favouriteAccommodation) throws Exception {
+	public ResponseEntity<FavouriteAccommodationDTO> createFavouriteAccommodation(@RequestBody FavouriteAccommodationWithAccommodationDTO favouriteAccommodation) throws Exception {
 		FavouriteAccommodationDTO savedFavouriteAccommodation = favouriteAccommodationService.create(favouriteAccommodation);
 		return new ResponseEntity<FavouriteAccommodationDTO>(savedFavouriteAccommodation, HttpStatus.CREATED);
 	}

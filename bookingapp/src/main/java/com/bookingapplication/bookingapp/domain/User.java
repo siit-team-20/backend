@@ -28,12 +28,14 @@ public class User {
     private String phone;
     @Column
     private UserType type;
+    @Column
+    private boolean isBlocked;
 
     public User() {
 
     }
     
-    public User(String email, String password, String name, String surname, String address, String phone, UserType type) {
+    public User(String email, String password, String name, String surname, String address, String phone, UserType type, boolean isBlocked) {
     	this.email = email;
     	this.password = password;
     	this.name = name;
@@ -41,6 +43,7 @@ public class User {
     	this.address = address;
     	this.phone = phone;
     	this.type = type;
+    	this.isBlocked = isBlocked;
     }
 
     public String getEmail() {
@@ -99,6 +102,14 @@ public class User {
         this.phone = phone;
     }
     
+    public boolean getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+    
     public void copyValues(User user) {
 		this.email = user.getEmail();
 		this.name = user.getName();
@@ -106,6 +117,7 @@ public class User {
 		this.password = user.getPassword();
 		this.phone = user.getPhone();
 		this.address = user.getAddress();
+		this.isBlocked = user.getIsBlocked();
     }
 	
 }

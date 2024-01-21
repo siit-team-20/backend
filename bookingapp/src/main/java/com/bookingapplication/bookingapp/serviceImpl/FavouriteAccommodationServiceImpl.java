@@ -49,7 +49,7 @@ public class FavouriteAccommodationServiceImpl implements FavouriteAccommodation
 	}
 
 	@Override
-	public FavouriteAccommodationDTO create(FavouriteAccommodationDTO favouriteAccommodationDTO) throws Exception {
+	public FavouriteAccommodationDTO create(FavouriteAccommodationWithAccommodationDTO favouriteAccommodationDTO) throws Exception {
 		FavouriteAccommodation favouriteAccommodation = toFavouriteAccommodation(favouriteAccommodationDTO);
 		if (favouriteAccommodation.getId() != null) {
 			throw new Exception("Id mora biti null prilikom perzistencije novog entiteta.");
