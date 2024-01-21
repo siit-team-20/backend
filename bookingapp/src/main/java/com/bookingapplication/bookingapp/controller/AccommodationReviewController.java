@@ -43,12 +43,14 @@ public class AccommodationReviewController {
 	 * url: /api/accommodationReviews GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<AccommodationReviewDTO>> getAccommodationReviews(@RequestParam(required = false) String ownerEmail, @RequestParam(required = false) String accommodationId) {
+	public ResponseEntity<Collection<AccommodationReviewDTO>> getAccommodationReviews(@RequestParam(required = false) String ownerEmail, @RequestParam(required = false) String accommodationId, @RequestParam(required = false) String onlyNotApproved) {
 		Collection<AccommodationReviewDTO> accommodationReviews = accommodationReviewService.findAll();
 		if (ownerEmail != null)
 			accommodationReviews = accommodationReviewService.findAll(ownerEmail);
-		else if (accommodationId != null)
-			accommodationReviews = accommodationReviewService.findAll(Long.valueOf(accommodationId));
+		else if (accommodationId != null && onlyNotApproved != null)
+			accommodationReviews = accommodationReviewService.findAll(Long.valueOf(accommodationId), Boolean.valueOf(onlyNotApproved));
+		else if (onlyNotApproved != null)
+			accommodationReviews = accommodationReviewService.findAll(Boolean.valueOf(onlyNotApproved));
 		else
 			accommodationReviews = accommodationReviewService.findAll();
 		return new ResponseEntity<Collection<AccommodationReviewDTO>>(accommodationReviews, HttpStatus.OK);

@@ -40,10 +40,12 @@ public class OwnerReviewController {
 	 * url: /api/greetings GET
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<OwnerReviewDTO>> getOwnerReviews(@RequestParam(required = false) String ownerEmail) {
+	public ResponseEntity<Collection<OwnerReviewDTO>> getOwnerReviews(@RequestParam(required = false) String ownerEmail, @RequestParam(required = false) String onlyReported) {
 		Collection<OwnerReviewDTO> ownerReviews = ownerReviewService.findAll();
 		if (ownerEmail != null)
 			ownerReviews = ownerReviewService.findAll(ownerEmail);
+		else if (onlyReported != null)
+			ownerReviews = ownerReviewService.findAll(Boolean.valueOf(onlyReported));
 		else
 			ownerReviews = ownerReviewService.findAll();
 		return new ResponseEntity<Collection<OwnerReviewDTO>>(ownerReviews, HttpStatus.OK);

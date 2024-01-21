@@ -9,7 +9,8 @@ public interface AccommodationReviewService {
 	
 	Collection<AccommodationReviewDTO> findAll();
 	Collection<AccommodationReviewDTO> findAll(String guestEmail);
-	Collection<AccommodationReviewDTO> findAll(Long accommodationId);
+	Collection<AccommodationReviewDTO> findAll(Long accommodationId, boolean onlyNotApproved);
+	Collection<AccommodationReviewDTO> findAll(boolean onlyNotApproved);
 	AccommodationReviewDTO findOne(Long id);
 	AccommodationReviewDTO create(AccommodationReviewDTO accommodationReview) throws Exception;
 	AccommodationReviewDTO update(AccommodationReviewDTO accommodationReview, Long id) throws Exception;

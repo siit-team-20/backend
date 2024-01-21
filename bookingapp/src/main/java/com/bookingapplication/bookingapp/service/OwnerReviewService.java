@@ -9,6 +9,7 @@ public interface OwnerReviewService {
 
 	Collection<OwnerReviewDTO> findAll();
 	Collection<OwnerReviewDTO> findAll(String ownerEmail);
+	Collection<OwnerReviewDTO> findAll(boolean onlyReported);
 	OwnerReviewDTO findOne(Long id);
 	OwnerReviewDTO create(OwnerReviewDTO ownerReview) throws Exception;
 	OwnerReviewDTO update(OwnerReviewDTO ownerReview, Long id) throws Exception;

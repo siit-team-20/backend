@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.bookingapplication.bookingapp.domain.AccommodationReview;
+import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.AccommodationReviewDTO;
 import com.bookingapplication.bookingapp.exceptions.AppException;
 import com.bookingapplication.bookingapp.repositoryjpa.AccommodationReviewRepositoryJpa;
@@ -31,10 +32,15 @@ public class AccommodationReviewServiceImpl implements AccommodationReviewServic
 	public Collection<AccommodationReviewDTO> findAll(String guestEmail) {
 		return toAccommodationReviewDtos(accommodationReviewRepositoryJpa.findAll().stream().filter(a -> a.getGuestEmail().equals(guestEmail)).collect(Collectors.toList()));
 	}
+	
+	@Override
+	public Collection<AccommodationReviewDTO> findAll(boolean onlyNotApproved) {
+		return toAccommodationReviewDtos(accommodationReviewRepositoryJpa.findAll().stream().filter(a -> a.getIsApproved() != onlyNotApproved).collect(Collectors.toList()));
+	}
 
 	@Override
-	public Collection<AccommodationReviewDTO> findAll(Long accommodationId) {
-		return toAccommodationReviewDtos(accommodationReviewRepositoryJpa.findAll().stream().filter(a -> a.getAccommodationId().equals(accommodationId)).collect(Collectors.toList()));
+	public Collection<AccommodationReviewDTO> findAll(Long accommodationId, boolean onlyNotApproved) {
+		return toAccommodationReviewDtos(accommodationReviewRepositoryJpa.findAll().stream().filter(a -> a.getAccommodationId().equals(accommodationId) && a.getIsApproved() != onlyNotApproved).collect(Collectors.toList()));
 	}
 
 	@Override

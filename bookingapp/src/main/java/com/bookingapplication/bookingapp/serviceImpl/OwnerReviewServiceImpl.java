@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.bookingapplication.bookingapp.domain.OwnerReview;
+import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.OwnerReviewDTO;
 import com.bookingapplication.bookingapp.exceptions.AppException;
 import com.bookingapplication.bookingapp.repositoryjpa.OwnerReviewRepositoryJpa;
@@ -32,6 +33,10 @@ public class OwnerReviewServiceImpl implements OwnerReviewService {
 	public Collection<OwnerReviewDTO> findAll(String ownerEmail) {
 		return toOwnerReviewDtos(ownerReviewRepositoryJpa.findAll().stream().filter(o -> o.getOwnerEmail().equals(ownerEmail)).collect(Collectors.toList()));
 		}
+	@Override
+	public Collection<OwnerReviewDTO> findAll(boolean onlyReported) {
+		return toOwnerReviewDtos(ownerReviewRepositoryJpa.findAll().stream().filter(a -> a.getIsReported() == onlyReported).collect(Collectors.toList()));
+	}
 
 	@Override
 	public OwnerReviewDTO findOne(Long id) {
