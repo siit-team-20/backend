@@ -59,7 +59,7 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 		List<AccommodationReservation> accommodationReservations = accommodationReservationRepositoryJpa.findAll();
 		List<AccommodationReservation> ownersAccommodationReservations = new ArrayList<AccommodationReservation>();
 		for (AccommodationReservation accommodationReservation : accommodationReservations) {
-			if (accommodationReservation.getStatus().equals(status) && accommodationReservation.getGuestEmail().equals(guestEmail) && accommodationReservation.getAccommodationId() == accommodationId) {
+			if (accommodationReservation.getStatus().equals(status) && accommodationReservation.getGuestEmail().equals(guestEmail) && accommodationReservation.getAccommodationId().equals(accommodationId)) {
 				LocalDate endDate = accommodationReservation.getDate();
 				endDate.plusDays(accommodationReservation.getDays());
 				if (endDate.plusDays(days).isAfter(LocalDate.now()))

@@ -32,10 +32,16 @@ public class OwnerReviewServiceImpl implements OwnerReviewService {
 	@Override
 	public Collection<OwnerReviewDTO> findAll(String ownerEmail) {
 		return toOwnerReviewDtos(ownerReviewRepositoryJpa.findAll().stream().filter(o -> o.getOwnerEmail().equals(ownerEmail)).collect(Collectors.toList()));
-		}
+	}
+	
 	@Override
-	public Collection<OwnerReviewDTO> findAll(boolean onlyReported) {
-		return toOwnerReviewDtos(ownerReviewRepositoryJpa.findAll().stream().filter(a -> a.getIsReported() == onlyReported).collect(Collectors.toList()));
+	public Collection<OwnerReviewDTO> findAll(boolean isReported) {
+		return toOwnerReviewDtos(ownerReviewRepositoryJpa.findAll().stream().filter(a -> a.getIsReported() == isReported).collect(Collectors.toList()));
+	}
+	
+	@Override
+	public Collection<OwnerReviewDTO> findAll(String ownerEmail, boolean isReported) {
+		return toOwnerReviewDtos(ownerReviewRepositoryJpa.findAll().stream().filter(a -> a.getIsReported() == isReported && a.getOwnerEmail().equals(ownerEmail)).collect(Collectors.toList()));
 	}
 
 	@Override
