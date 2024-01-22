@@ -92,8 +92,15 @@ public class AccommodationRequestServiceImpl implements AccommodationRequestServ
 	public void deleteByAccommodationId(Long accommodationId) {
 		List<AccommodationRequest> accommodationRequests = accommodationRequestRepositoryJpa.findAll();
 		for (AccommodationRequest accommodationRequest : accommodationRequests) {
-			if (accommodationRequest.getNewAccommodationId().equals(accommodationId) || accommodationRequest.getOldAccommodationId().equals(accommodationId)) {
-				accommodationRequestRepositoryJpa.deleteById(accommodationRequest.getId());
+			if (accommodationRequest.getOldAccommodationId() != null) {
+				if (accommodationRequest.getNewAccommodationId().equals(accommodationId) || accommodationRequest.getOldAccommodationId().equals(accommodationId)) {
+					accommodationRequestRepositoryJpa.deleteById(accommodationRequest.getId());
+				}
+			}
+			else {
+				if (accommodationRequest.getNewAccommodationId().equals(accommodationId)) {
+					accommodationRequestRepositoryJpa.deleteById(accommodationRequest.getId());
+				}
 			}
 		}
 	}
