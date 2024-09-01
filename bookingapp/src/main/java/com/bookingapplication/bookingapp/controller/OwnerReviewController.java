@@ -20,7 +20,7 @@ import com.bookingapplication.bookingapp.dtos.OwnerReviewDTO;
 import com.bookingapplication.bookingapp.service.OwnerReviewService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/ownerReviews")
 public class OwnerReviewController {
 	

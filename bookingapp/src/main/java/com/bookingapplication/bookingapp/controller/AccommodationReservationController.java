@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.service.AccommodationReservationService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/accommodations/reservations")
 public class AccommodationReservationController {
 
@@ -82,6 +83,7 @@ public class AccommodationReservationController {
 		return new ResponseEntity<AccommodationReservationDTO>(savedAccommodationReservation, HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasAnyAuthority('ROLE_Owner')")
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AccommodationReservationDTO> updateAccommodationReservation(@RequestBody AccommodationReservationDTO accommodationReservation, @PathVariable Long id)
 			throws Exception {

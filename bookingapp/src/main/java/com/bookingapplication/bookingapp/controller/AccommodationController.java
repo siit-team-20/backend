@@ -28,7 +28,7 @@ import com.bookingapplication.bookingapp.service.DateRangeService;
 import com.bookingapplication.bookingapp.service.FavouriteAccommodationService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/accommodations")
 public class AccommodationController {
 	

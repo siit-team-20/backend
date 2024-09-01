@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.bookingapplication.bookingapp.domain.UserType;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-public class UserDTO {
+public class UserDTO implements UserDetails {
 	
 	private String email;
     private String token;
@@ -34,7 +36,9 @@ public class UserDTO {
     	this.type = type;
     	this.isBlocked = isBlocked;
     }
-    
+
+    @Override
+    @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
     	List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
     	list.add(new SimpleGrantedAuthority("ROLE_" + this.getType()));
@@ -114,5 +118,41 @@ public class UserDTO {
 		this.address = user.getAddress();
 		this.isBlocked = user.getIsBlocked();
     }
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

@@ -21,7 +21,7 @@ import com.bookingapplication.bookingapp.dtos.ReportDTO;
 import com.bookingapplication.bookingapp.service.ReportService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/reports")
 
 public class ReportController {

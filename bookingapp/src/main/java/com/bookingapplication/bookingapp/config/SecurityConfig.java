@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/users/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/accommodations").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/accommodations/*").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/api/accommodations/reservations/*").hasAuthority("ROLE_Owner")
+                        .requestMatchers(HttpMethod.GET, "/api/ownerReviews").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }

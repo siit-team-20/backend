@@ -142,7 +142,7 @@ public class AccommodationReservationServiceImpl implements AccommodationReserva
 	@Override
 	public AccommodationReservationDTO update(ReservationWithAccommodationDTO accommodationReservationDTO, Long id) throws Exception {
 		AccommodationReservation accommodationReservation = accommodationReservationRepositoryJpa.findById(id)
-                .orElseThrow(() -> new AppException("Accommodation not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("Accommodation reservation not found", HttpStatus.NOT_FOUND));
 
 		updateAccommodationReservation(accommodationReservation, toAccommodationReservation(accommodationReservationDTO));
 

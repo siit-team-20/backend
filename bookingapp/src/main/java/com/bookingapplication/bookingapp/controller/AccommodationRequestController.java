@@ -20,7 +20,7 @@ import com.bookingapplication.bookingapp.dtos.AccommodationRequestDTO;
 import com.bookingapplication.bookingapp.service.AccommodationRequestService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/accommodations/requests")
 public class AccommodationRequestController {
 	
