@@ -1,5 +1,6 @@
 package com.bookingapplication.bookingapp.controller;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -25,14 +26,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
 
-import com.bookingapplication.bookingapp.domain.AccommodationReservation;
 import com.bookingapplication.bookingapp.domain.ReservationStatus;
-import com.bookingapplication.bookingapp.dtos.AccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.AccommodationReservationDTO;
 import com.bookingapplication.bookingapp.dtos.CredentialsDTO;
-import com.bookingapplication.bookingapp.dtos.ReservationWithAccommodationDTO;
 import com.bookingapplication.bookingapp.dtos.UserDTO;
-import com.bookingapplication.bookingapp.exceptions.AppException;
 
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -83,7 +80,7 @@ public class ReservationControllerTest {
 	@Test
 	public void acceptReservation_unauthorized() {
 		final String URL = "/api/accommodations/reservations/{id}";
-		Long reservationId = 1L;
+		Long reservationId = 3L;
 		Assertions.assertThrows(ResourceAccessException.class, () -> {	
 			HttpEntity<Void> requestBody = new HttpEntity<Void>(null, getHeader(null));
 			ResponseEntity<AccommodationReservationDTO> response = restTemplate.exchange(URL, HttpMethod.PUT, requestBody, new ParameterizedTypeReference<AccommodationReservationDTO>() {}, reservationId);		
@@ -104,23 +101,9 @@ public class ReservationControllerTest {
 	}
 	
 	@Test
-	public void acceptReservation_forbidden_guest() {
-		final String URL = "/api/accommodations/reservations/{id}";
-		Long reservationId = 1L;	
-
-		AccommodationReservationDTO reservation = new AccommodationReservationDTO();
-		
-
-		HttpEntity<AccommodationReservationDTO> requestBody = new HttpEntity<AccommodationReservationDTO>(reservation, getHeader(JWT_GUEST_1));
-		ResponseEntity<AccommodationReservationDTO> response = restTemplate.exchange(URL, HttpMethod.PUT, requestBody, new ParameterizedTypeReference<AccommodationReservationDTO>() {}, reservationId);	
-		
-		Assertions.assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
-	}
-	
-	@Test
 	public void acceptReservation_forbidden_admin() {
 		final String URL = "/api/accommodations/reservations/{id}";
-		Long reservationId = 1L;	
+		Long reservationId = 3L;	
 
 		AccommodationReservationDTO reservation = new AccommodationReservationDTO();
 
@@ -133,7 +116,7 @@ public class ReservationControllerTest {
 	@Test
 	public void acceptReservation() {
 		final String URL = "/api/accommodations/reservations/{id}";
-		Long reservationId = 1L;
+		Long reservationId = 3L;
 
 		HttpEntity<Void> header = new HttpEntity<Void>(null, getHeader(JWT_OWNER_1));
 		ResponseEntity<AccommodationReservationDTO> res = restTemplate.exchange(URL, HttpMethod.GET, header, new ParameterizedTypeReference<AccommodationReservationDTO>() {}, reservationId);	
@@ -149,5 +132,26 @@ public class ReservationControllerTest {
 
 		assertThat(result).usingRecursiveComparison().ignoringFields("status").isEqualTo(reservation);
 		assertThat(result.getStatus()).isEqualTo(ReservationStatus.Approved);
+	}
+	
+	@Test
+	public void rejectReservation() {
+		final String URL = "/api/accommodations/reservations/{id}";
+		Long reservationId = 3L;
+
+		HttpEntity<Void> header = new HttpEntity<Void>(null, getHeader(JWT_OWNER_1));
+		ResponseEntity<AccommodationReservationDTO> res = restTemplate.exchange(URL, HttpMethod.GET, header, new ParameterizedTypeReference<AccommodationReservationDTO>() {}, reservationId);	
+		
+		AccommodationReservationDTO reservation = res.getBody();
+		reservation.setStatus(ReservationStatus.Rejected);
+		
+		HttpEntity<AccommodationReservationDTO> requestBody = new HttpEntity<AccommodationReservationDTO>(reservation, getHeader(JWT_OWNER_1));
+		ResponseEntity<AccommodationReservationDTO> response = restTemplate.exchange(URL, HttpMethod.PUT, requestBody, new ParameterizedTypeReference<AccommodationReservationDTO>() {}, reservationId);	
+		AccommodationReservationDTO result = response.getBody();
+		
+		Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+
+		assertThat(result).usingRecursiveComparison().ignoringFields("status").isEqualTo(reservation);
+		assertThat(result.getStatus()).isEqualTo(ReservationStatus.Rejected);
 	}
 }

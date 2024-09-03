@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -40,6 +41,18 @@ public class ReservationServiceTest {
 		reservation.setStatus(ReservationStatus.Approved);
 		AccommodationReservationDTO r = reservationService.update(reservationService.toAccommodationReservationDTO(reservation), reservation.getId());
 		Assertions.assertTrue(r.getStatus().equals(ReservationStatus.Approved));
+	}
+	
+	@Test
+	@DisplayName("Reject reservation - status changed")
+	public void createReservation() throws Exception {
+		AccommodationReservation reservation = new AccommodationReservation();
+		Mockito.when(this.reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
+		Mockito.when(this.reservationRepository.save(reservation)).thenReturn(reservation);
+		
+		reservation.setStatus(ReservationStatus.Rejected);
+		AccommodationReservationDTO r = reservationService.update(reservationService.toAccommodationReservationDTO(reservation), reservation.getId());
+		Assertions.assertTrue(r.getStatus().equals(ReservationStatus.Rejected));
 	}
 	
 	@Test

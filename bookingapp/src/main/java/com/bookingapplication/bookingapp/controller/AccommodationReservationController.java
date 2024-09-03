@@ -83,7 +83,7 @@ public class AccommodationReservationController {
 		return new ResponseEntity<AccommodationReservationDTO>(savedAccommodationReservation, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasAnyAuthority('ROLE_Owner')")
+	@PreAuthorize("hasAnyAuthority('ROLE_Owner', 'ROLE_Guest')")
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AccommodationReservationDTO> updateAccommodationReservation(@RequestBody AccommodationReservationDTO accommodationReservation, @PathVariable Long id)
 			throws Exception {
